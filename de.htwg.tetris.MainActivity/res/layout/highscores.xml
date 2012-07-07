@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+	
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+
+	<LinearLayout
+	    android:orientation="vertical"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent">
+	
+	    <LinearLayout
+	      android:orientation="vertical"
+	      android:layout_width="match_parent"
+	      android:layout_height="wrap_content">
+	
+	      <TextView android:id="@+id/HighscoresTilte"
+	          android:background="@drawable/screen_background_black"
+	          android:textColor="@color/solid_white"
+	          android:layout_width="match_parent"
+	          android:layout_height="wrap_content"
+	          android:text="@string/Highscores_title"
+	          android:gravity="center_horizontal" 
+	          android:textSize="40dip" 
+	          android:layout_marginBottom="10dip"
+	          android:layout_marginTop="10dip"/>
+	
+		  <View android:layout_height="2dip" 
+		  android:background="@color/solid_grey" android:layout_width="fill_parent"/>
+		  
+	      <TextView
+	      	  android:id="@+id/Highscore_easy_view"
+	          android:format="@string/Highscore_format"
+	          android:layout_width="match_parent"
+	          android:textColor="@color/solid_black"
+	          android:layout_height="wrap_content" 
+	          android:layout_marginBottom="3dip" 
+	          android:paddingLeft="4dip" 
+			  android:textSize="26dip" 
+			  android:layout_marginTop="3dip" 
+			  android:background="@color/solid_yellow"/>
+	          
+	      <TextView
+	          android:id="@+id/Highscore_medium_view"
+	          android:format="@string/Highscore_format"
+	          android:background="@color/solid_orange"
+	          android:layout_width="match_parent"
+	          android:layout_height="wrap_content" android:layout_marginBottom="3dip" android:paddingLeft="4dip" android:textSize="26dip" android:textColor="@color/solid_white"/>
+	          
+	      <TextView
+	          android:id="@+id/Highscore_hard_view"
+	          android:format="@string/Highscore_format"
+	          android:background="@drawable/red"
+	          android:layout_width="match_parent"
+	          android:textColor="@color/solid_white"
+	          android:layout_height="wrap_content" android:layout_marginBottom="3dip" android:paddingLeft="4dip" android:textSize="26dip"/>
+	
+	    </LinearLayout>
+	
+	    <LinearLayout
+	        android:orientation="horizontal"
+	        android:layout_height="wrap_content" 
+	        android:layout_width="match_parent">
+	
+	        <Button 
+	        	android:id="@+id/ResetHighscoresButton"
+	            android:layout_height="wrap_content"
+	            android:text="@string/Reset"
+	            android:layout_width="match_parent"/>
+	
+	    </LinearLayout>		
+		
+	</LinearLayout>
+	
+	<ToggleButton 
+		android:textOn="Help is ON"
+		android:textOff="Help is OFF"
+		android:id="@+id/ToggleHelpButton"
+		android:layout_above="@+id/textview"
+		android:layout_height="wrap_content" 
+		android:layout_width="fill_parent">
+	</ToggleButton>
+		
+	<TextView 
+		android:id="@+id/textview" 
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content" 
+		android:text="@string/DevelopedBy"
+		android:layout_alignParentBottom="true" 
+		android:paddingLeft="5dip">
+	</TextView>
+
+</RelativeLayout>
