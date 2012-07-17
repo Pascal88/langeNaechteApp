@@ -1,25 +1,45 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.htwg.tetris"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="0.1" >
 
+    <!-- From Android 2.3 to 4.0 -->
     <uses-sdk
-        android:minSdkVersion="10"
-        android:targetSdkVersion="15" />
+        android:minSdkVersion="9"
+        android:targetSdkVersion="14" />
 
     <application
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        
         <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_main" >
+            android:name=".gui.activities.SplashActivity"
+            android:configChanges="orientation"
+    		android:screenOrientation="portrait" 
+    		android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity android:name=".gui.activities.MenuActivity"
+            android:configChanges="orientation"
+    		android:screenOrientation="portrait">
+        </activity>
+        
+        <activity android:name=".gui.activities.GameActivity"
+            android:configChanges="orientation"
+    		android:screenOrientation="portrait" 
+    		android:theme="@android:style/Theme.NoTitleBar">
+        </activity>
+        
+        <activity android:name=".gui.activities.HighscoresActivity"
+            android:configChanges="orientation"
+    		android:screenOrientation="portrait">
+        </activity>
+        
     </application>
 
 </manifest>

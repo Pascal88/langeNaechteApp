@@ -5,22 +5,50 @@
 	<!-- =============================== -->
 	
 	<string name="app_name">Tetris</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">MainActivity</string>
     
     <string name="DevelopedBy">developed by the best htwg team</string>
-    <string name="Reset">Reset</string>
+    <string name="eula_title">License Agreement</string>
+	<string name="accept">Accept</string>
+	<string name="decline">Decline</string>
+	<string name="no_thanks">No Thanks</string>
+	
+	<string-array name="Positive_Text">
+		<item>OK</item>
+		<item>ok</item>
+		<item>Ok</item>
+		<item>oK</item>
+		<item>oki</item>
+		<item>0K</item>
+		<item>yeap</item>
+		<item>yeah</item>
+		<item>yes</item>
+		<item>yep</item>
+		<item>ja</item>
+		<item>da</item>
+		<item>si</item>
+		<item>positive</item>
+		<item>go!</item>
+	</string-array>
     
     <!-- =============================== -->
 	<!--    Activity Specific strings    -->
 	<!-- =============================== -->
 	 
+	 <!--    Game Activity    -->
+	<string name="gameEnded">That\'s all!</string>
+	
+	<string name="RestartOrLeave">Would you like to restart or leave the game?</string> 
+	<string name="restart">restart</string>
+	
+	
     <!--    Menu Activity    -->
     
-    <string name="Easy">Easy</string>
-    <string name="Medium">Medium</string>
-    <string name="Hard">Hard</string>
+    <string-array name="Feedback_Message">
+		<item>Any comments or ideas are welcome. Do you want to share some piece of mind?</item>
+		<item>\nWe would really apreciate it.</item>
+	</string-array>
+
+    <string name="feedback_website">http://tetris.uservoice.com</string>
     
     <!--    Splash Activity    -->
     
@@ -28,9 +56,11 @@
     
     <!--    Highscores Activity    -->
     
-    <string name="Highscores_title">Highscores</string>    
-    <string name="Highscore_format">%1$s :  %2$s</string>
-	<string name="preferred_date_format">dd.MM.yy</string>
+    <string name="Highscores_title">Highscores</string>
+	<!-- Score 0000 
+			or
+		 1. 0000		--> 
+	<string name="Score_format">%1$s %2$s</string>
     
 
 </resources>

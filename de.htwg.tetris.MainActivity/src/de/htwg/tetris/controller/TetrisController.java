@@ -26,7 +26,7 @@ public class TetrisController implements ITetrisController {
 		this.spielarray.registerObserverReset(this);
 		
 		
-		frame = new Gui();
+		frame = new Gui();//TODO ersetzen
 		
 	}
 
@@ -65,7 +65,7 @@ public class TetrisController implements ITetrisController {
 		return frame;
 	}	
 	
-	public int getHighscore(){
+	public int getHighscore(){//TODO call this from game
 		return highscore;
 	}
 	

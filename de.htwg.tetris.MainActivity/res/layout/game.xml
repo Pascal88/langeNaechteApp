@@ -14,27 +14,6 @@
 		android:layout_height="0px">
 	</LinearLayout>
 
-	<LinearLayout android:layout_height="wrap_content"
-		android:layout_width="fill_parent" android:layout_weight="2">
-		<TableRow android:layout_width="fill_parent" android:gravity="center_horizontal"
-			android:paddingTop="5dip" android:layout_height="fill_parent">
-			<Button android:layout_width="wrap_content" android:text="Restart"
-				android:id="@+id/ResetButton" android:layout_height="fill_parent"
-				android:layout_weight="1"></Button>
-			<Button android:layout_width="wrap_content" android:text="Pause"
-				android:id="@+id/PauseButton" android:layout_height="fill_parent"
-				android:layout_weight="1"></Button>
-			<Button android:layout_width="wrap_content" android:text="Check"
-				android:id="@+id/CheckButton" android:layout_height="fill_parent"
-				android:layout_weight="1"></Button>
-			<Button android:layout_width="wrap_content" android:text="Help"
-				android:id="@+id/HelpButton" android:layout_height="fill_parent"
-				android:layout_weight="1"></Button>
-			<Button android:layout_width="wrap_content" android:text="Save"
-				android:id="@+id/SaveButton" android:layout_height="fill_parent"
-				android:layout_weight="1"></Button>
-		</TableRow>
-	</LinearLayout>
 
 	<LinearLayout 
 		android:layout_height="wrap_content"
@@ -45,13 +24,13 @@
 			android:layout_height="wrap_content" 
 			android:layout_width="fill_parent"
 			android:layout_weight="1">
-
-			<!-- Custom Chronometer	-->
-			<esis.android.sudoku.frontend.game.MyChronometer
-				android:id="@+id/chronometer" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:textSize="14sp"
+		<TextView
+				android:id="@+id/Score" 
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content" 
+				android:textSize="14sp"
 				android:gravity="center" />
-
+		    
 			<View android:background="@color/solid_grey" android:layout_height="3dp"/>
 
 		</TableLayout>
@@ -59,7 +38,7 @@
 
 	<LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="horizontal" android:layout_weight="20">
 	<TableLayout 
-		android:id="@+id/SudokuGridLayout" 
+		android:id="@+id/TetrisLayout" 
 		android:layout_width="fill_parent"
 		android:gravity="center" 
 		android:layout_weight="1"
@@ -73,7 +52,44 @@
 		android:layout_width="match_parent" 
 		android:background="@color/solid_grey"
 		android:layout_height="3dp" />
+	
+	<LinearLayout 
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:paddingTop="5dip" 		
+		android:layout_weight="2">
+		<TableRow 
+			android:layout_width="fill_parent" 
+			android:gravity="center_horizontal"
+			android:layout_height="fill_parent">
 
+			<Button
+			    android:id="@+id/LeftButton"
+			    android:layout_width="wrap_content"
+			    android:layout_height="fill_parent"
+			    android:layout_weight="2"
+			    android:text="&lt;-" />
+			<Button 
+				android:layout_width="wrap_content" 
+				android:text="^"
+				android:id="@+id/UpButton" 
+				android:layout_height="fill_parent"
+				android:layout_weight="1"/>
+			<Button 
+				android:layout_width="wrap_content" 
+				android:text="v"
+				android:id="@+id/DownButton" 
+				android:layout_height="fill_parent"
+				android:layout_weight="1"/>
+			<Button 
+				android:layout_width="wrap_content" 
+				android:text="->"
+				android:id="@+id/RightButton" 
+				android:layout_height="fill_parent"
+				android:layout_weight="2"/>
+		</TableRow>
+	</LinearLayout>
+	
  	<LinearLayout 
 		android:layout_width="match_parent"
 		android:orientation="horizontal" 

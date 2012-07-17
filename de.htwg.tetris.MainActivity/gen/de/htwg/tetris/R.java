@@ -8,33 +8,103 @@
 package de.htwg.tetris;
 
 public final class R {
+    public static final class array {
+        /**     Menu Activity    
+         */
+        public static final int Feedback_Message=0x7f080001;
+        public static final int Positive_Text=0x7f080000;
+    }
     public static final class attr {
     }
+    public static final class color {
+        public static final int solid_black=0x7f050007;
+        /** #FF0000
+         */
+        public static final int solid_blue=0x7f050004;
+        public static final int solid_green=0x7f050005;
+        public static final int solid_grey=0x7f050006;
+        public static final int solid_orange=0x7f050002;
+        public static final int solid_red=0x7f050003;
+        public static final int solid_white=0x7f050000;
+        public static final int solid_yellow=0x7f050001;
+    }
     public static final class dimen {
-        public static final int padding_large=0x7f040002;
-        public static final int padding_medium=0x7f040001;
-        public static final int padding_small=0x7f040000;
+        public static final int padding_large=0x7f060002;
+        public static final int padding_medium=0x7f060001;
+        public static final int padding_small=0x7f060000;
     }
     public static final class drawable {
+        public static final int blue=0x7f020004;
+        public static final int green=0x7f020005;
         public static final int ic_action_search=0x7f020000;
         public static final int ic_launcher=0x7f020001;
+        public static final int red=0x7f020003;
+        public static final int screen_background_black=0x7f020007;
+        public static final int splash_background=0x7f020002;
+        public static final int translucent_background=0x7f020008;
+        public static final int transparent_background=0x7f020009;
+        public static final int yellow=0x7f020006;
     }
     public static final class id {
-        public static final int menu_settings=0x7f080000;
+        public static final int DownButton=0x7f0a0006;
+        public static final int ExitButton=0x7f0a000d;
+        public static final int FeedbackButton=0x7f0a000c;
+        public static final int HighscoresButton=0x7f0a000b;
+        public static final int HighscoresTable=0x7f0a0008;
+        public static final int LeftButton=0x7f0a0004;
+        public static final int MenuLayout=0x7f0a0009;
+        public static final int NewGameButton=0x7f0a000a;
+        public static final int RightButton=0x7f0a0007;
+        public static final int Score=0x7f0a0001;
+        public static final int SplashLayout=0x7f0a000e;
+        public static final int SplashText=0x7f0a000f;
+        public static final int TetrisLayout=0x7f0a0002;
+        public static final int UpButton=0x7f0a0005;
+        public static final int line_under_grid=0x7f0a0003;
+        public static final int ll=0x7f0a0000;
     }
     public static final class layout {
-        public static final int activity_main=0x7f030000;
+        public static final int game=0x7f030000;
+        public static final int highscores=0x7f030001;
+        public static final int menu=0x7f030002;
+        public static final int splash=0x7f030003;
     }
-    public static final class menu {
-        public static final int activity_main=0x7f070000;
+    public static final class raw {
+        public static final int eula=0x7f040000;
     }
     public static final class string {
-        public static final int app_name=0x7f050000;
-        public static final int hello_world=0x7f050001;
-        public static final int menu_settings=0x7f050002;
-        public static final int title_activity_main=0x7f050003;
+        public static final int DevelopedBy=0x7f070001;
+        /**     Highscores Activity    
+         */
+        public static final int Highscores_title=0x7f07000b;
+        public static final int RestartOrLeave=0x7f070007;
+        /**  Score 0000 
+			or
+		 1. 0000		
+         */
+        public static final int Score_format=0x7f07000c;
+        public static final int accept=0x7f070003;
+        /**  =============================== 
+    App strings    
+ =============================== 
+         */
+        public static final int app_name=0x7f070000;
+        public static final int decline=0x7f070004;
+        public static final int eula_title=0x7f070002;
+        public static final int feedback_website=0x7f070009;
+        /**  =============================== 
+    Activity Specific strings    
+ =============================== 
+    Game Activity    
+         */
+        public static final int gameEnded=0x7f070006;
+        public static final int no_thanks=0x7f070005;
+        public static final int restart=0x7f070008;
+        /**     Splash Activity    
+         */
+        public static final int splash_subtitle=0x7f07000a;
     }
     public static final class style {
-        public static final int AppTheme=0x7f060000;
+        public static final int AppTheme=0x7f090000;
     }
 }

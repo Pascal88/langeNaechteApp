@@ -1,6 +1,5 @@
 package de.htwg.tetris.gui.swing;
 
-import java.awt.Graphics;
 
 public interface IGameField  {
 
@@ -9,9 +8,5 @@ public interface IGameField  {
 
 	public void resetGameField();
 
-	/**
-	 *  paint the Array
-	 */
-	public void paintComponent(Graphics g);
 
 }
