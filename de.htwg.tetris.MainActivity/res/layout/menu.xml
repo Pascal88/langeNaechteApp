@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/ll" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:gravity="top">
+
+	<TableLayout android:gravity="center" android:layout_width="fill_parent" android:layout_height="match_parent" android:id="@+id/MenuLayout">
+		<TableRow>
+			<RadioGroup android:orientation="horizontal" android:layout_height="wrap_content" android:layout_weight="1" android:id="@+id/DifficultyRadioGroup">
+				<RadioButton android:id="@+id/radio_easy" android:layout_height="wrap_content" android:layout_gravity="center" android:gravity="center" android:text="@string/Easy" android:saveEnabled="true" android:layout_weight="1" android:layout_width="match_parent"></RadioButton>
+				<RadioButton android:id="@+id/radio_medium" android:layout_height="wrap_content" android:layout_gravity="center" android:gravity="center" android:text="@string/Medium" android:saveEnabled="true" android:layout_weight="1" android:layout_width="match_parent"></RadioButton>
+				<RadioButton android:id="@+id/radio_hard" android:layout_height="wrap_content" android:layout_gravity="center" android:gravity="center" android:text="@string/Hard" android:saveEnabled="true" android:layout_weight="1" android:layout_width="match_parent"></RadioButton>
+			</RadioGroup>
+		</TableRow>
+		<TableRow android:layout_height="wrap_content" android:baselineAligned="true" android:layout_width="match_parent" android:layout_weight="1" android:layout_gravity="center">
+		<Button android:text="Start" android:layout_gravity="fill_vertical" android:layout_width="match_parent" android:id="@+id/NewGameButton" android:layout_height="match_parent" android:layout_weight="1"></Button>
+		</TableRow>
+		<TableRow android:layout_height="wrap_content" android:baselineAligned="true" android:layout_width="match_parent" android:layout_weight="1" android:layout_gravity="center">
+		<Button android:text="Load Game" android:id="@+id/LoadGameButton" android:layout_width="fill_parent" android:layout_height="match_parent" android:layout_weight="1"></Button>
+		</TableRow>
+		<TableRow android:layout_height="wrap_content" android:baselineAligned="true" android:layout_width="match_parent" android:layout_weight="1" android:layout_gravity="center">
+		<Button android:text="Highscores" android:id="@+id/HighscoresButton" android:layout_width="fill_parent" android:layout_height="match_parent" android:layout_weight="1"></Button>
+		</TableRow>
+		<TableRow android:layout_height="wrap_content" android:baselineAligned="true" android:layout_width="match_parent" android:layout_weight="1" android:layout_gravity="center">
+		<Button android:text="Feedback" android:id="@+id/FeedbackButton" android:layout_width="fill_parent" android:layout_height="match_parent" android:layout_weight="1"></Button>
+		</TableRow>
+		<TableRow android:layout_marginBottom="2dp" android:layout_height="wrap_content" android:baselineAligned="true" android:layout_width="match_parent" android:layout_weight="1" android:layout_gravity="center">
+		<Button android:onClick="ExitGame" android:text="Exit" android:id="@+id/ExitButton" android:layout_width="fill_parent" android:layout_height="match_parent" android:layout_weight="1"></Button>
+		</TableRow>
+		<TextView 
+			android:layout_height="wrap_content" 
+			android:layout_width="fill_parent" 
+			android:text="@string/DevelopedBy" 
+			android:layout_alignBottom="@+id/MenuLayout" 
+			android:paddingLeft="5dip">
+		</TextView>
+	</TableLayout>
+
+
+</RelativeLayout>

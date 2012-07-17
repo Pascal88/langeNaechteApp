@@ -1,8 +1,36 @@
 <resources>
 
-    <string name="app_name">Tetris</string>
+    <!-- =============================== -->
+	<!--    App strings    -->
+	<!-- =============================== -->
+	
+	<string name="app_name">Tetris</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
+    
+    <string name="DevelopedBy">developed by the best htwg team</string>
+    <string name="Reset">Reset</string>
+    
+    <!-- =============================== -->
+	<!--    Activity Specific strings    -->
+	<!-- =============================== -->
+	 
+    <!--    Menu Activity    -->
+    
+    <string name="Easy">Easy</string>
+    <string name="Medium">Medium</string>
+    <string name="Hard">Hard</string>
+    
+    <!--    Splash Activity    -->
+    
+    <string name="splash_subtitle">The best fkin Tetris there is</string>
+    
+    <!--    Highscores Activity    -->
+    
+    <string name="Highscores_title">Highscores</string>    
+    <string name="Highscore_format">%1$s :  %2$s</string>
+	<string name="preferred_date_format">dd.MM.yy</string>
+    
 
 </resources>
