@@ -1,0 +1,7 @@
+$ cat .gitignore
+
+
+*.class
+
+./de.htwg.tetris.MainActivity/bin/*
+./de.htwg.tetris.MainActivity/gen/*
