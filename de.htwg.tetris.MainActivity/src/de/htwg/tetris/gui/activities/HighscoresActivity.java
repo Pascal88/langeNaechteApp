@@ -1,6 +1,8 @@
 package de.htwg.tetris.gui.activities;
 
 import de.htwg.tetris.R;
+import de.htwg.tetris.controller.HighscoreController;
+import de.htwg.tetris.model.HighScoreBean;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -39,7 +41,8 @@ public class HighscoresActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.highscores);
 		setListener();
-		getHighscoresFromServer();		
+		MyApp.getHighscoresFromServer(getApplicationContext());
+		updateGui();
     }
 
 	private void setListener() {
@@ -53,7 +56,7 @@ public class HighscoresActivity extends Activity {
 	}
 
 	/**update all 5 highscores*/
-	private void updateGui() {//FIXME NEEDED?
+	private void updateGui() {
 	    	for(int i = 1; i <= MyApp.NUM_OF_HIGHSCORES; i++)
 	    	    updateGuiHighscore(Integer.toString(i));
 	}
@@ -71,16 +74,4 @@ public class HighscoresActivity extends Activity {
 	    Log.d(TAG, "Updated score "+ key + " with " + text);
     }
 
-    private void getHighscoresFromServer() {
-	//TODO get 5 highest scores from server
-    	SharedPreferences sp = getSharedPreferences(MyApp.HIGHSCORES, MODE_WORLD_WRITEABLE);
-	SharedPreferences.Editor editor = sp.edit();
-	//for all 5 scores
-		//editor.putInt(i, i_score);
-        if(!editor.commit())
-            Log.e(TAG, "Couldn't set new highscores");
-    }
-
-
-    
 }
