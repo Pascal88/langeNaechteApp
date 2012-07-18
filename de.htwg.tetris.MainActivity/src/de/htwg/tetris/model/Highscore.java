@@ -76,6 +76,7 @@ public class Highscore implements IHighscore {
 		
 		for(int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
+			out[i] = new HighScoreBean();
 			out[i].setUserName(jsonObject.getString("Username"));
 			out[i].setScore(jsonObject.getInt("Score"));
 		}
