@@ -42,6 +42,7 @@ public class GameActivity extends Activity {
 	initButtons();
 	newGame();
 	MyApp.getHighscoresFromServer(getApplicationContext());
+	//Zum testen saveHighscore(666);
     }
 
     @Override
@@ -173,9 +174,7 @@ public class GameActivity extends Activity {
 		HighscoresActivity.defValue);
 	if (newScore > worstScore)
 	    Toast.makeText(this, "New Highscore: " + newScore, Toast.LENGTH_SHORT).show();
-	Log.d(TAG, "Posting score " + newScore + " to server");
-	if(HighscoreController.INSTANCE.saveHighScore("DEBUG_user", newScore))//FIXME get username
-	    Toast.makeText(this, "Highscore posted", Toast.LENGTH_LONG).show();
+	MyApp.saveHighscoreToServer("DEBUG_USER",newScore);//FIXME get username: Name must have no spaces (Illegal character in query exception)
     }
 
     private void askForRestartOrLeave() {

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.util.Log;
+import android.widget.Toast;
 import de.htwg.tetris.R;
 import de.htwg.tetris.controller.HighscoreController;
 import de.htwg.tetris.model.HighScoreBean;
@@ -49,6 +50,22 @@ public class MyApp extends Application {
 			}
 		    }
 		},"getHighscoresFromServerThread")
+		.start();		
+	}
+	
+	/**Get 5 highest scores from server
+	 * -asynchronously-
+	 * @param c the app context
+	 * @param newScore */
+	public static void saveHighscoreToServer(final String username, final int newScore) {
+		new Thread(new Runnable() {
+		    @Override
+		    public void run() {
+			Log.d(TAG, "Posting score " + newScore + " to server");
+			if(!HighscoreController.INSTANCE.saveHighScore(username, newScore))
+			    Log.d(TAG, "Problem posting score " + newScore + " to server");
+		    }
+		},"saveHighscoreToServerThread")
 		.start();		
 	}
 
