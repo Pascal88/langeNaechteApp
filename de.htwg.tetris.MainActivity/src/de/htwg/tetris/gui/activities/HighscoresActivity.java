@@ -40,9 +40,23 @@ public class HighscoresActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.highscores);
+		initScores();
 		setListener();
 		MyApp.getHighscoresFromServer(getApplicationContext());
 		updateGui();
+    }
+
+    /**
+     * Create score views
+     */
+    private void initScores() {
+	TableLayout scoreTable = (TableLayout)findViewById(R.id.HighscoresTable);
+	for(int i = 0; i < MyApp.NUM_OF_HIGHSCORES; i++){
+	TextView child = new TextView(getApplicationContext());
+	child.setTextSize(30);
+	child.setTextColor(getResources().getColor(R.color.solid_black));
+	scoreTable.addView(child, i);
+	}
     }
 
 	private void setListener() {
@@ -69,8 +83,9 @@ public class HighscoresActivity extends Activity {
 	    int value = settings.getInt(key, defValue);
 	    String format = getString(R.string.Score_format);
 	    String text = String.format(format, key+".", value);
-	    View theScore = ((TableLayout)findViewById(R.id.HighscoresTable)).getChildAt(intKey);
-	    ((TextView)theScore).setText(text);
+	    TableLayout scoreTable = (TableLayout)findViewById(R.id.HighscoresTable);
+	    TextView theScore = (TextView)(scoreTable).getChildAt(intKey);
+	    theScore.setText(text);
 	    Log.d(TAG, "Updated score "+ key + " with " + text);
     }
 

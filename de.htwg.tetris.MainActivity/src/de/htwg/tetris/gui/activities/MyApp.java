@@ -30,20 +30,26 @@ public class MyApp extends Application {
 	private final static Random rand = new Random();
 
 	/**Get 5 highest scores from server
-	 * @param c */
-	public static void getHighscoresFromServer(Context c) {
-
-		HighScoreBean[] scores = HighscoreController.INSTANCE.loadHighScore(MyApp.NUM_OF_HIGHSCORES);
-		if (scores == null)
-		   	Log.e(TAG, "got null (highscores) from server");
-		else{
-	        	SharedPreferences sp = c.getSharedPreferences(MyApp.HIGHSCORES, MODE_WORLD_WRITEABLE);
-	        	SharedPreferences.Editor editor = sp.edit();
-	        	for(int i = 0; i < scores.length; i++)
-	        	    editor.putInt(Integer.toString(i), scores[i].getScore());
-	                if(!editor.commit())
-	                    Log.e(TAG, "Couldn't set new highscores");
-		}
+	 * -asynchronously-
+	 * @param c the app context*/
+	public static void getHighscoresFromServer(final Context c) {
+		new Thread(new Runnable() {
+		    @Override
+		    public void run() {
+			HighScoreBean[] scores = HighscoreController.INSTANCE.loadHighScore(MyApp.NUM_OF_HIGHSCORES);
+			if (scores == null)
+			   	Log.e(TAG, "got null (highscores) from server");
+			else{
+		        	SharedPreferences sp = c.getSharedPreferences(MyApp.HIGHSCORES, MODE_WORLD_WRITEABLE);
+		        	SharedPreferences.Editor editor = sp.edit();
+		        	for(int i = 0; i < scores.length; i++)
+		        	    editor.putInt(Integer.toString(i), scores[i].getScore());
+		                if(!editor.commit())
+		                    Log.e(TAG, "Couldn't set new highscores");
+			}
+		    }
+		},"getHighscoresFromServerThread")
+		.start();		
 	}
 
 	/**

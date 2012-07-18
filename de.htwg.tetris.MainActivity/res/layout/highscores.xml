@@ -10,8 +10,7 @@
 	    android:layout_height="match_parent">	   
 
 	      <TextView 
-	          android:background="@drawable/screen_background_black"
-	          android:textColor="@color/solid_white"
+	          android:textColor="@color/solid_black"
 	          android:layout_width="match_parent"
 	          android:layout_height="wrap_content"
 	          android:text="@string/Highscores_title"
@@ -27,9 +26,9 @@
 
 		<TableLayout
 		    android:id="@+id/HighscoresTable"
-		    android:orientation="vertical"
 		    android:layout_width="match_parent"
-		    android:layout_height="fill_parent"/>	
+		    android:layout_height="fill_parent"
+		    android:orientation="vertical" />
 	    
 	</LinearLayout>
 

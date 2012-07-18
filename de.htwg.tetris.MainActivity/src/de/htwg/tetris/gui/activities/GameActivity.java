@@ -41,17 +41,7 @@ public class GameActivity extends Activity {
 	initScoreBar();
 	initButtons();
 	newGame();
-	getServerScores();
-    }
-
-    // TODO asynchronously get server scores
-    private void getServerScores() {
-	new Thread(new Runnable() {
-	    @Override
-	    public void run() {
-		MyApp.getHighscoresFromServer(getApplicationContext());
-	    }
-	}).start();
+	MyApp.getHighscoresFromServer(getApplicationContext());
     }
 
     @Override
@@ -76,7 +66,7 @@ public class GameActivity extends Activity {
     }
 
     private void updateGuiScore() {
-	score.setText("Remove this text");//TODO TetrisController.INSTANCE.getHighscore());
+	score.setText("Replace this with score");//TODO TetrisController.INSTANCE.getHighscore());
     }
     
     private void initButtons() {
