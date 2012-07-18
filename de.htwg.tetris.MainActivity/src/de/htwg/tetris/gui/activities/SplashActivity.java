@@ -3,6 +3,8 @@ package de.htwg.tetris.gui.activities;
 import java.io.DataInputStream;
 
 import de.htwg.tetris.R;
+import de.htwg.tetris.controller.HighscoreController;
+import de.htwg.tetris.controller.TetrisController;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -32,8 +34,14 @@ public class SplashActivity extends Activity{
         setContentView(R.layout.splash);
         appendVersion();
     	setLayoutListener((RelativeLayout) findViewById(R.id.SplashLayout));
-    	//TODO checkForSavedGame(getApplicationContext());
+    	initAppSingletones();
         launchwaitingThread();
+    }
+
+    //So instances get created
+    private void initAppSingletones() {
+	HighscoreController hsinitializer = new HighscoreController();
+	//TetrisController tinitializer = new TetrisController();
     }
 
     private void appendVersion() {

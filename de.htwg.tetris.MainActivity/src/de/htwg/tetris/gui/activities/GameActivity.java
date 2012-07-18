@@ -13,7 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import de.htwg.tetris.R;
 import de.htwg.tetris.Tetris;
+import de.htwg.tetris.controller.HighscoreController;
 import de.htwg.tetris.controller.TetrisController;
+import de.htwg.tetris.model.HighScoreBean;
 
 /**
  * The class GameActivity
@@ -39,6 +41,17 @@ public class GameActivity extends Activity {
 	initScoreBar();
 	initButtons();
 	newGame();
+	getServerScores();
+    }
+
+    // TODO asynchronously get server scores
+    private void getServerScores() {
+	new Thread(new Runnable() {
+	    @Override
+	    public void run() {
+		MyApp.getHighscoresFromServer(getApplicationContext());
+	    }
+	}).start();
     }
 
     @Override
@@ -126,10 +139,10 @@ public class GameActivity extends Activity {
 	repaint();
 	// Score reset
     }
-    
+
     /** TODO
      * Called everytime the gui gets updated
-     * */
+     **/
     private void repaint() {
 	updateGuiScore();
 	//...
@@ -139,7 +152,7 @@ public class GameActivity extends Activity {
     private void gameEnded() {
 	Log.d(TAG, "Game Ended");
 	showGameEndedMessage();
-	saveHighscore(TetrisController.INSTANCE.getHighscore());// FIXME getinstace()?
+	saveHighscore(TetrisController.INSTANCE.getHighscore());
     }
 
     private void showGameEndedMessage() {
@@ -169,9 +182,10 @@ public class GameActivity extends Activity {
 	int worstScore = settings.getInt(worstScoreIndex,
 		HighscoresActivity.defValue);
 	if (newScore > worstScore)
-	    Toast.makeText(this, "New Highscore: " + newScore, Toast.LENGTH_LONG).show();
+	    Toast.makeText(this, "New Highscore: " + newScore, Toast.LENGTH_SHORT).show();
 	Log.d(TAG, "Posting score " + newScore + " to server");
-	// TODO post newScore to server
+	if(HighscoreController.INSTANCE.saveHighScore("DEBUG_user", newScore))//FIXME get username
+	    Toast.makeText(this, "Highscore posted", Toast.LENGTH_LONG).show();
     }
 
     private void askForRestartOrLeave() {

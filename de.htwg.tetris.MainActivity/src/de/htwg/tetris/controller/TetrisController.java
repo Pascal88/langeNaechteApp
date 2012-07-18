@@ -1,6 +1,6 @@
 package de.htwg.tetris.controller;
 
-import de.htwg.tetris.gui.swing.Gui;
+import de.htwg.tetris.gui.swingDELETE.Gui;
 import de.htwg.tetris.model.IGameArray;
 
 public class TetrisController implements ITetrisController {
