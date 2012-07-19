@@ -23,7 +23,7 @@ class Model_Highscore_DbMapper extends Database_Mapper
     }
 
     public function getSomeHighscores($number) {
-        return $this->fetch(array("Username", "Score"), "ASC","Score" , $number);
+        return $this->fetch(array("Username", "Score"), "DESC","Score" , $number);
     }
 
     public function toArray($array){
