@@ -1,6 +1,6 @@
 package de.htwg.tetris.model;
 
-import de.htwg.tetris.gui.swing.IGameField;
+import de.htwg.tetris.gui.swingDELETE.IGameField;
 import de.htwg.tetris.model.IQuader.states;
 
 public class GameArray extends AGameArray {

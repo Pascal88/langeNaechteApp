@@ -43,6 +43,12 @@
 		android:gravity="center" 
 		android:layout_weight="1"
 		android:layout_height="fill_parent">
+			
+	    <de.htwg.tetris.gui.activities.GameView
+	        android:id="@+id/GameFieldId"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	    />
 
 	</TableLayout>
 	</LinearLayout>
