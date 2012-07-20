@@ -14,9 +14,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 import de.htwg.tetris.R;
 import de.htwg.tetris.Tetris;
+import de.htwg.tetris.controller.GameController;
 import de.htwg.tetris.controller.HighscoreController;
+import de.htwg.tetris.controller.IGameController;
+import de.htwg.tetris.controller.IMechanikController;
+import de.htwg.tetris.controller.MechanikController;
 import de.htwg.tetris.controller.TetrisController;
 import de.htwg.tetris.model.HighScoreBean;
+import de.htwg.tetris.model.IGameArray;
 
 /**
  * The class GameActivity
@@ -33,12 +38,20 @@ public class GameActivity extends Activity {
 	private Tetris backendTetris;// The class to restart a game
 	private TextView score;
 	GameView gameField;
+	private IMechanikController mechanikController = null;
+	private IGameController gameController = null;
+	private IGameArray gameArray = null;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		backendTetris = new Tetris();
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game);
+		
+		this.gameController = GameController.INSTANCE;
+		this.mechanikController = MechanikController.INSTANCE;
+		this.gameArray = this.gameController.getSpielarray();
 		
 		initScoreBar();
 		initButtons();
@@ -130,7 +143,12 @@ public class GameActivity extends Activity {
 
 	private void ResetGame() {
 		// TODO Restore speed of game
-		backendTetris = new Tetris();
+		this.mechanikController.stopMechanic();
+		this.gameController.resetGame();
+		this.gameController.newElement();
+		this.gameArray.elementMergeArray(this.gameController.getElement());
+
+		this.mechanikController.newMechanik();
 		repaint();
 		// Score reset
 	}
