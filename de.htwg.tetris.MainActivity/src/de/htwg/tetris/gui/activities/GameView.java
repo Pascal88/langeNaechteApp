@@ -1,6 +1,10 @@
 package de.htwg.tetris.gui.activities;
 
+import de.htwg.tetris.Tetris;
 import de.htwg.tetris.controller.GameController;
+import de.htwg.tetris.controller.IGameController;
+import de.htwg.tetris.controller.IMechanikController;
+import de.htwg.tetris.controller.MechanikController;
 import de.htwg.tetris.model.IGameArray;
 import de.htwg.tetris.model.IQuader.states;
 import de.htwg.tetris.model.ITetrisColor;
@@ -17,6 +21,8 @@ public class GameView extends View implements IObserver {
 	
 	private Paint tetrisPaint;
 	private IGameArray gameArray = null;
+	private IMechanikController mechanikController = null;
+	private IGameController gameController = null;
 	private Canvas myCanvas;
 	private int height;
 	private int width;
@@ -48,8 +54,22 @@ public class GameView extends View implements IObserver {
 	private void init() {
 		setBackgroundColor(Color.BLACK);
 		tetrisPaint = new Paint();
+		new Tetris();
+		this.gameController = GameController.INSTANCE;
+		this.mechanikController = MechanikController.INSTANCE;
+		
 		this.gameArray = GameController.INSTANCE.getSpielarray();
 		this.gameArray.registerObserver(this);
+		this.newGame();
+	}
+	
+	private void newGame() {
+		this.mechanikController.stopMechanic();
+		this.gameController.resetGame();
+		this.gameController.newElement();
+		this.gameArray.elementMergeArray(this.gameController.getElement());
+
+		this.mechanikController.newMechanik();
 	}
 	
 	@Override
@@ -127,7 +147,7 @@ public class GameView extends View implements IObserver {
 			for (int j = 0; j < heightNumber; j++) {
 				if (gameArray.getState(i, j) != states.FREE) {
 					ITetrisColor c = gameArray.getColor(i,j);
-					tetrisPaint.setARGB(c.getA(), c.getR(), c.getG(), c.getB());
+					tetrisPaint.setARGB(0, c.getR(), c.getG(), c.getB());
 					canvas.drawRect(i*left,j*top,left+i*blockSize,top+j*blockSize,tetrisPaint);
 				}
 			}
