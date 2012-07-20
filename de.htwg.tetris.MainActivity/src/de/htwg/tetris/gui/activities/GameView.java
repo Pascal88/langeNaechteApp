@@ -59,7 +59,6 @@ public class GameView extends View implements IObserver {
 		
 		this.gameArray = GameController.INSTANCE.getSpielarray();
 		this.gameArray.registerObserver(this);
-		this.newGame();
 	}
 	
 	private void newGame() {
@@ -92,6 +91,8 @@ public class GameView extends View implements IObserver {
 		tetrisPaint.setColor(Color.RED);
 		tetrisPaint.setStyle(Paint.Style.STROKE);
 		canvas.drawRect(left, top, right, bottom, tetrisPaint);
+		
+		this.newGame();
 	}
 	
 	private void calcGameWindowSize(int viewHeight, int viewWidth) {
