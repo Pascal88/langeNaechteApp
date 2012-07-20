@@ -20,21 +20,17 @@ public class GameView extends View implements IObserver {
 	private IGameArray gameArray = null;
 	private IGameController gameController = null;
 	private Canvas myCanvas;
-	private int height;
-	private int width;
 	private int windowHeight;
 	private int windowWidth;
 	private int left;
 	private int top;
 	private int right;
 	private int bottom;
-	private int blockSize;
-	private int heightNumber = 20;
-	private int widthNumber = 10;
+	private int qubeSize;
 	
-	public static int WIDTH = 20;
-	public static int HEIGHT = 10;
-
+	public static int WIDTH = 10;
+	public static int HEIGHT = 20;
+	
 	public GameView(Context context) {
 		super(context);
 		init();
@@ -62,9 +58,7 @@ public class GameView extends View implements IObserver {
 	@Override
 	 public void onWindowFocusChanged(boolean hasFocus) {
 	    super.onWindowFocusChanged(hasFocus);
-		height = this.getHeight();
-		width = this.getWidth();
-		calcGameWindowSize(height,width);
+		calcGameWindowSize(this.getHeight(),this.getWidth());
 	 }
 
 	public void onDraw(Canvas canvas){
@@ -84,63 +78,48 @@ public class GameView extends View implements IObserver {
 	
 	private void calcGameWindowSize(int viewHeight, int viewWidth) {
 		
-		if((viewHeight == 0) || (viewWidth == 0)) {
-			//erreur
-		}
-		if(viewHeight > 2*viewWidth) {
+		if(viewHeight == 0 || viewWidth == 0) {
+			//error
+		} else if(viewHeight > 2*viewWidth) {
 			//more height than usable -> width is limit
-			windowWidth = calcNextTenWidth(viewWidth);
-			windowHeight = 2*windowWidth;
+			windowWidth = viewWidth - (viewWidth % WIDTH);
+			windowHeight = windowWidth*2;
 			left = (viewWidth-windowWidth)/2;
 			right = left+windowWidth;
 			top = (viewHeight-windowHeight)/2;
 			bottom = top+windowHeight;
+			qubeSize = windowWidth/WIDTH;
+			
 		} else if(viewHeight < viewWidth*2) {
 			//more width than usable -> height is limit
-			windowHeight = calcNextTwentyHeight(viewHeight);
+			windowHeight = viewHeight - (viewHeight % HEIGHT);
 			windowWidth = windowHeight/2;
 			left = (viewWidth-windowWidth)/2;
 			right = left+windowWidth;
 			top = (viewHeight-windowHeight)/2;
 			bottom = top+windowHeight;
+			qubeSize = viewHeight/HEIGHT;
 		}
 		
 	}
 	
-	//calculates the next smaller number divisible by ten
-	private int calcNextTenWidth(int num) {
-		//num = num-2;
-		num = num/widthNumber;
-		blockSize = num;
-		num = num*widthNumber;
-		return num;
-	}
-	
-	private int calcNextTwentyHeight(int num) {
-		//num = num-2;
-		num = num/heightNumber;
-		blockSize = num;
-		num = num*heightNumber;
-		return num;
-	}
-
-	@Override
 	public void update() {
-		repaint(myCanvas);
+		if(myCanvas != null){
+			repaint(myCanvas);
+		}
 	}
 
-	private void repaint(Canvas canvas) {
-		for (int i = 0; i < widthNumber; i++) {
-			for (int j = 0; j < heightNumber; j++) {
-				if (gameArray.getState(i, j) != states.FREE) {
-					ITetrisColor c = gameArray.getColor(i,j);
-					tetrisPaint = new Paint();
-					tetrisPaint.setColor(Color.rgb(c.getR(), c.getG(), c.getB()));
-					tetrisPaint.setStyle(Paint.Style.FILL);
-					Log.d("lala", "paint");
-					canvas.drawRect(i*left,j*top,left+i*blockSize,top+j*blockSize,tetrisPaint);
+	private synchronized void repaint(Canvas canvas) {
+			for (int i = 0; i < WIDTH; i++) {
+				for (int j = 0; j < HEIGHT; j++) {
+					if (gameArray.getState(i, j) != states.FREE) {
+						ITetrisColor c = gameArray.getColor(i,j);
+						tetrisPaint = new Paint();
+						tetrisPaint.setColor(Color.rgb(c.getR(), c.getG(), c.getB()));
+						tetrisPaint.setStyle(Paint.Style.FILL);
+						canvas.drawRect((i*qubeSize)+left,(j*qubeSize)+top,((i+1)*qubeSize)+left,((j+1)*qubeSize)+top,tetrisPaint);
+					}
 				}
 			}
-		}
 	}
 }

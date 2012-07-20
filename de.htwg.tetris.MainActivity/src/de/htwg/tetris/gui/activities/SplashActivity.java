@@ -1,7 +1,5 @@
 package de.htwg.tetris.gui.activities;
 
-import java.io.DataInputStream;
-
 import de.htwg.tetris.R;
 import de.htwg.tetris.controller.HighscoreController;
 

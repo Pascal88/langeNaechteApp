@@ -1,6 +1,7 @@
 package de.htwg.tetris.gui.activities;
 
 import de.htwg.tetris.R;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -49,6 +50,7 @@ public class HighscoresActivity extends Activity {
 	}
     }
 
+	@SuppressLint("WorldReadableFiles")
 	private void setListener() {
 		OnSharedPreferenceChangeListener listener = new OnSharedPreferenceChangeListener() {
 		    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -66,7 +68,8 @@ public class HighscoresActivity extends Activity {
 	}
     
     
-    private void updateGuiHighscore(String key) {
+    @SuppressLint("WorldReadableFiles")
+	private void updateGuiHighscore(String key) {
 	int intKey = Integer.parseInt(key)-1;//For index 0
   
 	SharedPreferences settings = getSharedPreferences(MyApp.HIGHSCORES, MODE_WORLD_READABLE);

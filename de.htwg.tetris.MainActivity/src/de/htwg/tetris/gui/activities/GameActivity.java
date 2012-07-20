@@ -5,9 +5,9 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -43,7 +43,6 @@ public class GameActivity extends Activity {
 	private IGameArray gameArray = null;
 	private List<IObserverNewElement> observersNewElement;
 	private ITetrisController tetrisController;
-	private ProgressDialog progressDialog;
 	private GameView gameField;
 
 	/** Called when the activity is first created. */
@@ -62,9 +61,8 @@ public class GameActivity extends Activity {
 		observersNewElement.add(tetrisController);
 		this.gameArray = this.gameController.getSpielarray();
 		MyApp.getHighscoresFromServer(getApplicationContext());
-		startGame();
-		 //newGame();// hier krachts
-		progressDialog.dismiss();
+		setContentView(R.layout.game);
+		newGame();
 	}
 
 	@Override
@@ -79,7 +77,6 @@ public class GameActivity extends Activity {
 
 	private void initGameField() {
 		gameField = (GameView) findViewById(R.id.GameFieldId);
-
 	}
 
 	private void initScoreBar() {
@@ -170,11 +167,10 @@ public class GameActivity extends Activity {
 	private void gameEnded() {
 		Log.d(TAG, "Game Ended");
 		showGameEndedMessage();
-		saveHighscore(TetrisController.INSTANCE.getHighscore());
+		saveHighscore(this.tetrisController.getHighscore());
 	}
 	
 	private void startGame(){
-		progressDialog = ProgressDialog.show(this, "", "Loading...");
 	}
 
 	private void showGameEndedMessage() {
@@ -233,5 +229,4 @@ public class GameActivity extends Activity {
 		this.mechanikController.stopMechanic();
 		this.finish();
 	}
-
 }
