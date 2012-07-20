@@ -9,7 +9,6 @@ import de.htwg.tetris.model.IGameArray;
 import de.htwg.tetris.model.IQuader.states;
 import de.htwg.tetris.model.ITetrisColor;
 import de.htwg.tetris.observer.IObserver;
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -147,7 +146,7 @@ public class GameView extends View implements IObserver {
 			for (int j = 0; j < heightNumber; j++) {
 				if (gameArray.getState(i, j) != states.FREE) {
 					ITetrisColor c = gameArray.getColor(i,j);
-					tetrisPaint.setARGB(0, c.getR(), c.getG(), c.getB());
+					tetrisPaint.setColor(Color.rgb(c.getR(), c.getG(), c.getB()));
 					canvas.drawRect(i*left,j*top,left+i*blockSize,top+j*blockSize,tetrisPaint);
 				}
 			}
