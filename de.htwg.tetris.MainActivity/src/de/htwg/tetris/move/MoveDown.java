@@ -2,7 +2,7 @@ package de.htwg.tetris.move;
 
 import java.util.List;
 
-import de.htwg.tetris.gui.swingDELETE.IGameField;
+import de.htwg.tetris.gui.activities.GameView;
 import de.htwg.tetris.model.IElement;
 import de.htwg.tetris.model.IGameArray;
 import de.htwg.tetris.model.IQuader.states;
@@ -89,7 +89,7 @@ public class MoveDown extends ASubjectNewElement implements IMove
 	private void deleteFullLine(int j) {
 		for (int y = j; y > 0; y--) 
 		{
-			for (int x = 0; x < IGameField.WIDTH; x++) {
+			for (int x = 0; x < GameView.WIDTH; x++) {
 				gameArray.setState(x, y, gameArray.getState(x, y-1));
 				ITetrisColor c = gameArray.getColor(x, y-1);
 				gameArray.setColor(x, y, c);
@@ -100,10 +100,10 @@ public class MoveDown extends ASubjectNewElement implements IMove
 	public int fullLine() 
 	{
 		int i = 0;
-		for (int y = 0; y < IGameField.HEIGHT; y++) 
+		for (int y = 0; y < GameView.HEIGHT; y++) 
 		{
 			int count = 0;
-			for (int x = 0; x < IGameField.WIDTH; x++) {
+			for (int x = 0; x < GameView.WIDTH; x++) {
 				if (gameArray.getState(x, y) != states.TAKEN) {
 					break; // break, because row can not be full
 				}

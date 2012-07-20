@@ -11,6 +11,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 public class GameView extends View implements IObserver {
@@ -30,6 +31,9 @@ public class GameView extends View implements IObserver {
 	private int blockSize;
 	private int heightNumber = 20;
 	private int widthNumber = 10;
+	
+	public static int WIDTH = 20;
+	public static int HEIGHT = 10;
 
 	public GameView(Context context) {
 		super(context);
@@ -130,7 +134,10 @@ public class GameView extends View implements IObserver {
 			for (int j = 0; j < heightNumber; j++) {
 				if (gameArray.getState(i, j) != states.FREE) {
 					ITetrisColor c = gameArray.getColor(i,j);
+					tetrisPaint = new Paint();
 					tetrisPaint.setColor(Color.rgb(c.getR(), c.getG(), c.getB()));
+					tetrisPaint.setStyle(Paint.Style.FILL);
+					Log.d("lala", "paint");
 					canvas.drawRect(i*left,j*top,left+i*blockSize,top+j*blockSize,tetrisPaint);
 				}
 			}

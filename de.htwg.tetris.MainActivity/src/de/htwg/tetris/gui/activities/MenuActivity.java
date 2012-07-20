@@ -1,6 +1,7 @@
 package de.htwg.tetris.gui.activities;
 
 import de.htwg.tetris.R;
+import de.htwg.tetris.controller.HighscoreController;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;

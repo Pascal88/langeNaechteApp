@@ -1,6 +1,5 @@
 package de.htwg.tetris.controller;
 
-import de.htwg.tetris.gui.swingDELETE.Gui;
 import de.htwg.tetris.model.IGameArray;
 
 public class TetrisController implements ITetrisController {
@@ -8,7 +7,6 @@ public class TetrisController implements ITetrisController {
 	public static ITetrisController INSTANCE = null;
 
 	private IGameArray spielarray;
-	private Gui frame;
 	private int highscore = 0;
 	
 	private IGameController gameController;
@@ -24,9 +22,6 @@ public class TetrisController implements ITetrisController {
 		this.mechanikController = mechanikController;
 		this.spielarray = gameController.getSpielarray(); 	
 		this.spielarray.registerObserverReset(this);
-		
-		
-		frame = new Gui();//TODO ersetzen
 		
 	}
 
@@ -51,19 +46,12 @@ public class TetrisController implements ITetrisController {
 	public void countHighscore(int i)
 	{
 		highscore += (i*100);
-		if (i>0) {
-			this.frame.setTextFieldValue(highscore);
-		}
 	}
 
 	public void update() {
 		
 		//this.frame.resetTextField();		
 	}
-
-	public Gui getFrame() {
-		return frame;
-	}	
 	
 	public int getHighscore(){//TODO call this from game
 		return highscore;
@@ -71,7 +59,6 @@ public class TetrisController implements ITetrisController {
 	
 	public void setHighscore(int s){
 		this.highscore = s;
-		this.frame.setTextFieldValue(highscore);
 	}
 
 	@Override

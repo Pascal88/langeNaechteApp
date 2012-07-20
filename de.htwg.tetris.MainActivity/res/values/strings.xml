@@ -6,7 +6,7 @@
 	
 	<string name="app_name">Tetris</string>
     
-    <string name="DevelopedBy">developed by the best htwg team</string>
+    <string name="DevelopedBy">developed by students of the HTWG Konstanz</string>
     <string name="eula_title">License Agreement</string>
 	<string name="accept">Accept</string>
 	<string name="decline">Decline</string>
@@ -38,7 +38,8 @@
 	<string name="gameEnded">That\'s all!</string>
 	
 	<string name="RestartOrLeave">Would you like to restart or leave the game?</string> 
-	<string name="restart">restart</string>
+	<string name="restart">Restart</string>
+	<string name="backToMenu">Back to Menu</string>
 	
 	
     <!--    Menu Activity    -->
@@ -52,7 +53,7 @@
     
     <!--    Splash Activity    -->
     
-    <string name="splash_subtitle">The best fkin Tetris there is</string>
+    <string name="splash_subtitle">loading ..</string>
     
     <!--    Highscores Activity    -->
     

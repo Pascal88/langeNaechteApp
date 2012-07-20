@@ -1,6 +1,6 @@
 package de.htwg.tetris.model;
 
-import de.htwg.tetris.gui.swingDELETE.IGameField;
+import de.htwg.tetris.gui.activities.GameView;
 import de.htwg.tetris.model.IQuader.states;
 
 public class GameArray extends AGameArray {
@@ -55,7 +55,7 @@ public class GameArray extends AGameArray {
 	public boolean arrayElementInRight(IElement el)
 	{
 		boolean ret = false;
-		int b = IGameField.WIDTH -1; // 10 -1	
+		int b = GameView.WIDTH -1; // 10 -1	
 		int x = el.getX();		
 		
 		if (((x <= b) 
@@ -71,7 +71,7 @@ public class GameArray extends AGameArray {
 	public boolean arrayElementInDown(IElement el)
 	{
 		boolean ret = true;
-		int h = IGameField.HEIGHT; // 20 -1	
+		int h = GameView.HEIGHT; // 20 -1	
 		int y = el.getY();		
 		
 		if (!((y < h) 
@@ -85,8 +85,8 @@ public class GameArray extends AGameArray {
 	}
 	
 	public void elementMergeArray(IElement el) {
-		for (int i = 0; i < IGameField.WIDTH; i++) {
-			for (int j = 0; j < IGameField.HEIGHT; j++) {
+		for (int i = 0; i < GameView.WIDTH; i++) {
+			for (int j = 0; j < GameView.HEIGHT; j++) {
 				if (getState(i, j) == states.ELEMENT) {
 					setState(i, j, states.FREE);
 				}

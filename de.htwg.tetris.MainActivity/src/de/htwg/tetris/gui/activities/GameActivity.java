@@ -1,8 +1,11 @@
 package de.htwg.tetris.gui.activities;
 
-import android.annotation.SuppressLint;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,15 +16,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.htwg.tetris.R;
-import de.htwg.tetris.Tetris;
 import de.htwg.tetris.controller.GameController;
-import de.htwg.tetris.controller.HighscoreController;
 import de.htwg.tetris.controller.IGameController;
 import de.htwg.tetris.controller.IMechanikController;
+import de.htwg.tetris.controller.ITetrisController;
 import de.htwg.tetris.controller.MechanikController;
 import de.htwg.tetris.controller.TetrisController;
-import de.htwg.tetris.model.HighScoreBean;
 import de.htwg.tetris.model.IGameArray;
+import de.htwg.tetris.observer.IObserverNewElement;
 
 /**
  * The class GameActivity
@@ -35,30 +37,34 @@ import de.htwg.tetris.model.IGameArray;
 public class GameActivity extends Activity {
 
 	private static final String TAG = GameActivity.class.getSimpleName();
-	private Tetris backendTetris;// The class to restart a game
 	private TextView score;
-	GameView gameField;
 	private IMechanikController mechanikController = null;
 	private IGameController gameController = null;
 	private IGameArray gameArray = null;
+	private List<IObserverNewElement> observersNewElement;
+	private ITetrisController tetrisController;
+	private ProgressDialog progressDialog;
+	private GameView gameField;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		backendTetris = new Tetris();
 		super.onCreate(savedInstanceState);
+		observersNewElement = new ArrayList<IObserverNewElement>();
+		gameController = new GameController(observersNewElement);
 		setContentView(R.layout.game);
-		
-		this.gameController = GameController.INSTANCE;
-		this.mechanikController = MechanikController.INSTANCE;
-		this.gameArray = this.gameController.getSpielarray();
 		
 		initScoreBar();
 		initButtons();
 		initGameField();
-		newGame();
+		this.mechanikController =  new MechanikController();
+		tetrisController = new TetrisController(GameController.INSTANCE, MechanikController.INSTANCE);
+		observersNewElement.add(tetrisController);
+		this.gameArray = this.gameController.getSpielarray();
 		MyApp.getHighscoresFromServer(getApplicationContext());
-		//Zum testen saveHighscore(666);
+		startGame();
+		 //newGame();// hier krachts
+		progressDialog.dismiss();
 	}
 
 	@Override
@@ -72,8 +78,7 @@ public class GameActivity extends Activity {
 	}
 
 	private void initGameField() {
-		//TODO change the type of layout to something useful
-		GameView gameField = (GameView) findViewById(R.id.GameFieldId);
+		gameField = (GameView) findViewById(R.id.GameFieldId);
 
 	}
 
@@ -116,22 +121,22 @@ public class GameActivity extends Activity {
 	}
 
 	private void leftButtonAction() {
-		// TODO Auto-generated method stub
+		this.gameController.moveLeft();
 
 	}
 
 	private void rightButtonAction() {
-		// TODO Auto-generated method stub
+		this.gameController.moveRight();
 
 	}
 
 	private void upButtonAction() {
-		// TODO Auto-generated method stub
+		this.gameController.moveUp();
 
 	}
 
 	private void downButtonAction() {
-		// TODO Auto-generated method stub
+		this.gameController.moveDown();
 
 	}
 
@@ -166,6 +171,10 @@ public class GameActivity extends Activity {
 		Log.d(TAG, "Game Ended");
 		showGameEndedMessage();
 		saveHighscore(TetrisController.INSTANCE.getHighscore());
+	}
+	
+	private void startGame(){
+		progressDialog = ProgressDialog.show(this, "", "Loading...");
 	}
 
 	private void showGameEndedMessage() {
@@ -209,7 +218,7 @@ public class GameActivity extends Activity {
 				ResetGame();
 			}
 		})
-		.setNegativeButton("Outta here",
+		.setNegativeButton(R.string.backToMenu,
 				new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog,int whichButton) {
 				exitGame();
@@ -221,6 +230,7 @@ public class GameActivity extends Activity {
 
 	private void exitGame() {
 		Log.d(TAG, "Exiting Game");
+		this.mechanikController.stopMechanic();
 		this.finish();
 	}
 

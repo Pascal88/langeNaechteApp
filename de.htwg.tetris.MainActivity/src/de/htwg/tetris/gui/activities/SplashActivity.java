@@ -4,7 +4,6 @@ import java.io.DataInputStream;
 
 import de.htwg.tetris.R;
 import de.htwg.tetris.controller.HighscoreController;
-import de.htwg.tetris.controller.TetrisController;
 
 import android.app.Activity;
 import android.content.Intent;
