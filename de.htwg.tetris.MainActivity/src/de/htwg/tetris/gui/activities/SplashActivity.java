@@ -2,6 +2,7 @@ package de.htwg.tetris.gui.activities;
 
 import de.htwg.tetris.R;
 import de.htwg.tetris.controller.HighscoreController;
+import de.htwg.tetris.controller.IHighscoreController;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,82 +15,87 @@ import android.widget.TextView;
 
 /**
  * This Activity shows a splash screen for a while and then goes to the menu.
- * you can stop the waiting if you tap your device.
- * It is intended to serve as a helper to load stuff, connect, etc.
+ * you can stop the waiting if you tap your device. It is intended to serve as a
+ * helper to load stuff, connect, etc.
+ * 
  * @author Sebastian Guillen
  */
 
-public class SplashActivity extends Activity{
+public class SplashActivity extends Activity {
 
-    private static final String TAG = SplashActivity.class.getSimpleName();
-    private final int splashTimeinSeconds = 1;
-    private Thread splashThread;
+	private static final String TAG = SplashActivity.class.getSimpleName();
+	private final int splashTimeinSeconds = 1;
+	private Thread splashThread;
+	@SuppressWarnings("unused")
+	private IHighscoreController highscoreController = null;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.splash);
-        appendVersion();
-    	setLayoutListener((RelativeLayout) findViewById(R.id.SplashLayout));
-    	initAppSingletones();
-        launchwaitingThread();
-    }
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.splash);
+		appendVersion();
+		setLayoutListener((RelativeLayout) findViewById(R.id.SplashLayout));
+		initHighscore();
+		launchwaitingThread();
+	}
 
-    //So instances get created
-    private void initAppSingletones() {
-	HighscoreController hsinitializer = new HighscoreController();
-	//TetrisController tinitializer = new TetrisController();
-    }
+	// So instances get created
+	private void initHighscore() {
+		highscoreController = new HighscoreController();
+	}
 
-    private void appendVersion() {
-	String versionCode = "";
-	try {
-	    versionCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-	} catch (NameNotFoundException e) {
-	    Log.e(TAG, e.getMessage());
-	}        
-	if (versionCode != "")
-	    versionCode = "version " + versionCode + "\n";
-	
-	TextView tv = (TextView) findViewById(R.id.SplashText);
-        tv.setText(versionCode + tv.getText());
-    }
-    
-    /**
-     * Thread for displaying the SplashScreen
-     */
-    private void launchwaitingThread() {
-	this.splashThread =  new Thread() {
-	     public void run() {
-		 try {
-		     //TODO get highscores maybe (server)?
-		     sleep(splashTimeinSeconds * 1000);
-		     startNextActivity();
-		 } catch(InterruptedException e) {
-		     Log.d(TAG, "splashThread Interupted:  "+ e.getMessage());
-		 } 
-	     }
-	};
-	this.splashThread.start();
-    }
+	private void appendVersion() {
+		String versionCode = "";
+		try {
+			versionCode = getPackageManager().getPackageInfo(getPackageName(),
+					0).versionName;
+		} catch (NameNotFoundException e) {
+			Log.e(TAG, e.getMessage());
+		}
+		if (versionCode != "")
+			versionCode = "version " + versionCode + "\n";
 
-    private void setLayoutListener(RelativeLayout splashLayout) {
-	splashLayout.setOnClickListener(new View.OnClickListener() {
-            public void onClick(@SuppressWarnings("unused") View v) {
-            	startNextActivity();
-            }
-    	});
-    }
+		TextView tv = (TextView) findViewById(R.id.SplashText);
+		tv.setText(versionCode + tv.getText());
+	}
+
+	/**
+	 * Thread for displaying the SplashScreen
+	 */
+	private void launchwaitingThread() {
+		this.splashThread = new Thread() {
+			public void run() {
+				try {
+					sleep(splashTimeinSeconds * 1000);
+					startNextActivity();
+				} catch (InterruptedException e) {
+					Log.d(TAG, "splashThread Interupted:  " + e.getMessage());
+				}
+			}
+		};
+		this.splashThread.start();
+	}
+
+	private void setLayoutListener(RelativeLayout splashLayout) {
+		splashLayout.setOnClickListener(new View.OnClickListener() {
+			public void onClick(@SuppressWarnings("unused") View v) {
+				startNextActivity();
+			}
+		});
+	}
 
 	@Override
 	public void onBackPressed() {
-	    	splashThread.interrupt();
-		super.onBackPressed();	    	
+		splashThread.interrupt();
+		super.onBackPressed();
 	}
-    	private void startNextActivity() { 
-    	    	// Interrupt so startNextActivity() isn't called again    	    	splashThread.interrupt();		finish();
+
+	private void startNextActivity() {
+		// Interrupt so startNextActivity() isn't called again
+		splashThread.interrupt();
+		finish();
 		Intent intent = new Intent();
 		intent.setClass(SplashActivity.this, MenuActivity.class);
 		SplashActivity.this.startActivity(intent);
-    	}
+	}
 }

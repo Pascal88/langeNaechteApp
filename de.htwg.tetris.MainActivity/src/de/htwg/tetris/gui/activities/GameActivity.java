@@ -52,7 +52,6 @@ public class GameActivity extends Activity {
 		observersNewElement = new ArrayList<IObserverNewElement>();
 		gameController = new GameController(observersNewElement);
 		setContentView(R.layout.game);
-		
 		initScoreBar();
 		initButtons();
 		initGameField();
@@ -61,7 +60,6 @@ public class GameActivity extends Activity {
 		observersNewElement.add(tetrisController);
 		this.gameArray = this.gameController.getSpielarray();
 		MyApp.getHighscoresFromServer(getApplicationContext());
-		setContentView(R.layout.game);
 		newGame();
 	}
 
@@ -93,6 +91,7 @@ public class GameActivity extends Activity {
 		Button b = (Button) findViewById(R.id.LeftButton);
 		b.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
+				Log.d("lala", "left");
 				leftButtonAction();
 			}
 		});
