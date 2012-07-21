@@ -19,7 +19,6 @@ public class GameView extends View implements IObserver {
 	private Paint tetrisPaint;
 	private IGameArray gameArray = null;
 	private IGameController gameController = null;
-	private Canvas myCanvas;
 	private int windowHeight;
 	private int windowWidth;
 	private int left;
@@ -63,17 +62,17 @@ public class GameView extends View implements IObserver {
 
 	public void onDraw(Canvas canvas){
 		
-		myCanvas = canvas;
-		
-		//game area
-		tetrisPaint.setColor(Color.GRAY);
-		tetrisPaint.setStyle(Paint.Style.FILL);
-		canvas.drawRect(left, top, right, bottom, tetrisPaint);
-		
 		//frame
 		tetrisPaint.setColor(Color.RED);
 		tetrisPaint.setStyle(Paint.Style.STROKE);
-		canvas.drawRect(left, top, right, bottom, tetrisPaint);
+		canvas.drawRect(left-1, top-1, right+1, bottom+1, tetrisPaint);
+		
+		//make sure on draw will be called again
+		invalidate();
+		
+		//update game screen
+		repaint(canvas);
+		
 	}
 	
 	private void calcGameWindowSize(int viewHeight, int viewWidth) {
@@ -103,23 +102,23 @@ public class GameView extends View implements IObserver {
 		
 	}
 	
-	public void update() {
-		if(myCanvas != null){
-			repaint(myCanvas);
-		}
-	}
+	public void update() {}
 
 	private synchronized void repaint(Canvas canvas) {
-			for (int i = 0; i < WIDTH; i++) {
-				for (int j = 0; j < HEIGHT; j++) {
-					if (gameArray.getState(i, j) != states.FREE) {
-						ITetrisColor c = gameArray.getColor(i,j);
-						tetrisPaint = new Paint();
-						tetrisPaint.setColor(Color.rgb(c.getR(), c.getG(), c.getB()));
-						tetrisPaint.setStyle(Paint.Style.FILL);
-						canvas.drawRect((i*qubeSize)+left,(j*qubeSize)+top,((i+1)*qubeSize)+left,((j+1)*qubeSize)+top,tetrisPaint);
-					}
+		for (int i = 0; i < WIDTH; i++) {
+			for (int j = 0; j < HEIGHT; j++) {
+				if (gameArray.getState(i, j) != states.FREE) {
+					ITetrisColor c = gameArray.getColor(i,j);
+					tetrisPaint = new Paint();
+					tetrisPaint.setColor(Color.rgb(c.getR(), c.getG(), c.getB()));
+					tetrisPaint.setStyle(Paint.Style.FILL);
+					canvas.drawRect((i*qubeSize)+left,(j*qubeSize)+top,((i+1)*qubeSize)+left,((j+1)*qubeSize)+top,tetrisPaint);
+				} else {
+					tetrisPaint.setColor(Color.GRAY);
+					tetrisPaint.setStyle(Paint.Style.FILL);
+					canvas.drawRect((i*qubeSize)+left,(j*qubeSize)+top,((i+1)*qubeSize)+left,((j+1)*qubeSize)+top,tetrisPaint);
 				}
 			}
+		}
 	}
 }
