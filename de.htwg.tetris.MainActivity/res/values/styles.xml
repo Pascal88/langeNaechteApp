@@ -2,4 +2,14 @@
 
     <style name="AppTheme" parent="android:Theme.Light" />
 
+    <style name="BiggerGameButton" parent="@android:style/Widget.Button">
+    <item name="android:maxWidth">100dip</item>
+    <item name="android:maxHeight">80dip</item>
+	</style>
+
+	<style name="SmallerGameButton" parent="@android:style/Widget.Button">
+    <item name="android:maxWidth">80dip</item>
+    <item name="android:maxHeight">80dip</item>
+	</style>
+    
 </resources>
