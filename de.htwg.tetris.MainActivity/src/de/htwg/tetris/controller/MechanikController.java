@@ -33,8 +33,13 @@ public class MechanikController implements IMechanikController {
 	public Thread getMechanic() {
 		return mechanic;
 	}
-	@Override
+
 	public IMechanikController getInstance() {
 		return MechanikController.INSTANCE;
+	}
+
+	public boolean isMechanikAlive() {
+		
+		return this.gameMechanic.isAlive();
 	}
 }

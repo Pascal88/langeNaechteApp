@@ -38,7 +38,7 @@
 	<string name="gameEnded">That\'s all!</string>
 	
 	<string name="RestartOrLeave">Would you like to restart or leave the game?</string> 
-	<string name="restart">Restart</string>
+	<string name="resume">Resume</string>
 	<string name="backToMenu">Back to Menu</string>
 	
 	

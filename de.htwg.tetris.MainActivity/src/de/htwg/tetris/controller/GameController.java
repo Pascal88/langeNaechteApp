@@ -109,6 +109,7 @@ public class GameController implements IGameController{
 	{
 		INewElement newEle = new NewElement();
 		element = newEle.newEl();
+		this.spielarray.elementMergeArray(this.getElement());
 		return element;
 	}
 	
@@ -122,6 +123,7 @@ public class GameController implements IGameController{
 	public void resetGame() 
 	{
 		spielarray.resetGame();	
+		this.newElement();
 	}
 
 	public IGameController getInstance() {

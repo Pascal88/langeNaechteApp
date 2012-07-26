@@ -11,9 +11,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
-public class GameView extends View implements IObserver {
+public class GameView extends View {
 	
 	private Paint tetrisPaint;
 	private IGameArray gameArray = null;
@@ -45,12 +46,12 @@ public class GameView extends View implements IObserver {
 	}
 	
 	private void init() {
+		Log.d("lala", "init");
 		setBackgroundColor(Color.BLACK);
 		tetrisPaint = new Paint();
 		this.gameController = GameController.INSTANCE;
 		
 		this.gameArray = this.gameController.getSpielarray();
-		this.gameArray.registerObserver(this);
 	}
 	
 	@Override
@@ -101,8 +102,6 @@ public class GameView extends View implements IObserver {
 		
 	}
 	
-	public void update() {}
-
 	private synchronized void repaint(Canvas canvas) {
 		for (int i = 0; i < WIDTH; i++) {
 			for (int j = 0; j < HEIGHT; j++) {
@@ -111,6 +110,9 @@ public class GameView extends View implements IObserver {
 					tetrisPaint = new Paint();
 					tetrisPaint.setColor(Color.rgb(c.getR(), c.getG(), c.getB()));
 					tetrisPaint.setStyle(Paint.Style.FILL);
+					canvas.drawRect((i*qubeSize)+left,(j*qubeSize)+top,((i+1)*qubeSize)+left,((j+1)*qubeSize)+top,tetrisPaint);
+					tetrisPaint.setColor(Color.BLACK);
+					tetrisPaint.setStyle(Paint.Style.STROKE);
 					canvas.drawRect((i*qubeSize)+left,(j*qubeSize)+top,((i+1)*qubeSize)+left,((j+1)*qubeSize)+top,tetrisPaint);
 				} else {
 					tetrisPaint.setColor(Color.GRAY);

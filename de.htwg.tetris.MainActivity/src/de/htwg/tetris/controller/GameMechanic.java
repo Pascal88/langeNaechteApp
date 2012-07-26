@@ -16,6 +16,10 @@ public class GameMechanic implements Runnable
 		this.isTetrisRun = false;
 	}
 	
+	public boolean isAlive(){
+		return this.isTetrisRun;
+	}
+	
 	public void run() 
 	{
 		while (isTetrisRun)

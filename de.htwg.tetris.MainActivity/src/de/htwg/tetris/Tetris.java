@@ -36,4 +36,10 @@ public class Tetris
 
 		new Tetris(); 
 	}
+	
+	public void finalize(){
+		GameController.INSTANCE = null;
+		MechanikController.INSTANCE = null;
+		TetrisController.INSTANCE = null;
+	}
 }

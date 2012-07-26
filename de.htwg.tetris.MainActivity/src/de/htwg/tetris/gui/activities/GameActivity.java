@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.htwg.tetris.R;
+import de.htwg.tetris.Tetris;
 import de.htwg.tetris.controller.GameController;
 import de.htwg.tetris.controller.IGameController;
 import de.htwg.tetris.controller.IMechanikController;
@@ -41,49 +42,69 @@ public class GameActivity extends Activity {
 	private IMechanikController mechanikController = null;
 	private IGameController gameController = null;
 	private IGameArray gameArray = null;
-	private List<IObserverNewElement> observersNewElement;
 	private ITetrisController tetrisController;
-	private GameView gameField;
+	private IGameArray persistentGameArray = null;
+	private Tetris tetris = null;
 
 	/** Called when the activity is first created. */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		observersNewElement = new ArrayList<IObserverNewElement>();
-		gameController = new GameController(observersNewElement);
+		this.tetris = new Tetris();
 		setContentView(R.layout.game);
 		initScoreBar();
 		initButtons();
-		initGameField();
-		this.mechanikController =  new MechanikController();
-		tetrisController = new TetrisController(GameController.INSTANCE, MechanikController.INSTANCE);
-		observersNewElement.add(tetrisController);
-		this.gameArray = this.gameController.getSpielarray();
 		MyApp.getHighscoresFromServer(getApplicationContext());
-		newGame();
 	}
-
-	@Override
-	public void onBackPressed() {
-		askForRestartOrLeave();
+	
+	protected void onStart(){
+		super.onStart();
+		if(this.tetris == null){
+			this.tetris = new Tetris();
+		}
+		gameController = GameController.INSTANCE;
+		mechanikController =  MechanikController.INSTANCE;
+		tetrisController = TetrisController.INSTANCE;
+		this.gameArray = this.gameController.getSpielarray();
+		findViewById(R.id.GameFieldId);
+		Log.d("lala", "start");
 	}
-
-	@Override
-	protected void onResume() {
+	
+	protected void onResume(){
 		super.onResume();
+		newGame();
+		if(this.persistentGameArray != null) {
+			this.gameArray = this.persistentGameArray;
+			this.gameController.setSpielarray(this.persistentGameArray);
+		}
 	}
-
-	private void initGameField() {
-		gameField = (GameView) findViewById(R.id.GameFieldId);
+	
+	protected void onPause(){
+		super.onPause();
+		this.persistentGameArray = this.gameArray;
+	}
+	
+	protected void onStop() {
+		super.onStop();
+		if(this.mechanikController.isMechanikAlive()){
+			this.mechanikController.stopMechanic();
+		}
+		this.tetris.finalize();
+		this.tetris = null;
+		Log.d("lala","stop");
+	}
+	
+	public void onBackPressed() {
+		this.mechanikController.stopMechanic();
+		askForRestartOrLeave();
 	}
 
 	private void initScoreBar() {
 		score = (TextView) findViewById(R.id.Score);
-		updateGuiScore();
+		//updateGuiScore(0);
 	}
 
-	private void updateGuiScore() {
-		score.setText("Replace this with score");
+	public void updateGuiScore(int x) {
+		score.setText(x);
 		//TODO TetrisController.INSTANCE.getHighscore());
 	}
 
@@ -144,11 +165,10 @@ public class GameActivity extends Activity {
 
 	private void ResetGame() {
 		// TODO Restore speed of game
-		this.mechanikController.stopMechanic();
+		if(this.mechanikController.isMechanikAlive()){
+			this.mechanikController.stopMechanic();
+		}
 		this.gameController.resetGame();
-		this.gameController.newElement();
-		this.gameArray.elementMergeArray(this.gameController.getElement());
-
 		this.mechanikController.newMechanik();
 		repaint();
 		// Score reset
@@ -158,7 +178,7 @@ public class GameActivity extends Activity {
 	 * Called everytime the gui gets updated
 	 **/
 	private void repaint() {
-		updateGuiScore();
+		//updateGuiScore(0);
 		//...
 	}
 
@@ -169,8 +189,6 @@ public class GameActivity extends Activity {
 		saveHighscore(this.tetrisController.getHighscore());
 	}
 	
-	private void startGame(){
-	}
 
 	private void showGameEndedMessage() {
 		new AlertDialog.Builder(this)
@@ -207,10 +225,10 @@ public class GameActivity extends Activity {
 		String msg = getString(R.string.RestartOrLeave);
 		AlertDialog d = new AlertDialog.Builder(this)
 		.setIcon(R.drawable.ic_action_search)
-		.setPositiveButton(getString(R.string.restart),
+		.setPositiveButton(getString(R.string.resume),
 				new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog,int whichButton) {
-				ResetGame();
+				MechanikController.INSTANCE.newMechanik();
 			}
 		})
 		.setNegativeButton(R.string.backToMenu,
@@ -225,7 +243,8 @@ public class GameActivity extends Activity {
 
 	private void exitGame() {
 		Log.d(TAG, "Exiting Game");
-		this.mechanikController.stopMechanic();
+		ResetGame();
+		this.persistentGameArray = null;
 		this.finish();
 	}
 }

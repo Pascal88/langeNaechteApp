@@ -22,7 +22,6 @@ public class TetrisController implements ITetrisController {
 		this.mechanikController = mechanikController;
 		this.spielarray = gameController.getSpielarray(); 	
 		this.spielarray.registerObserverReset(this);
-		
 	}
 
 	public IGameArray getSpielarray() {
@@ -46,6 +45,7 @@ public class TetrisController implements ITetrisController {
 	public void countHighscore(int i)
 	{
 		highscore += (i*100);
+		//this.activity.updateGuiScore(highscore);
 	}
 
 	public void update() {

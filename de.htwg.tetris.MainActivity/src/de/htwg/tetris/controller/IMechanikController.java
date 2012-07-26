@@ -7,5 +7,6 @@ public interface IMechanikController {
 	public Thread getMechanic();
 	public void stopMechanic();
 	public void newMechanik();
+	public boolean isMechanikAlive();
 	public IMechanikController getInstance();
 }

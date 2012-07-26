@@ -101,7 +101,7 @@ public final class R {
          */
         public static final int gameEnded=0x7f070006;
         public static final int no_thanks=0x7f070005;
-        public static final int restart=0x7f070008;
+        public static final int resume=0x7f070008;
         /**     Splash Activity    
          */
         public static final int splash_subtitle=0x7f07000b;
