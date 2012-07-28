@@ -33,19 +33,16 @@ public class TetrisController implements ITetrisController {
 	}
 	
 	public void update(int countFullLine) {
-		gameController.newElement();
 		countHighscore(countFullLine);
 		if (gameController.testGameOver()) {
 			mechanikController.stopMechanic();
-			gameController.resetGame();
-			this.mechanikController.newMechanik();
 		}
+		gameController.newElement();
 	}
 	
 	public void countHighscore(int i)
 	{
 		highscore += (i*100);
-		//this.activity.updateGuiScore(highscore);
 	}
 
 	public void update() {

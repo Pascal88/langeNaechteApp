@@ -14,19 +14,11 @@
 	
 	<string-array name="Positive_Text">
 		<item>OK</item>
-		<item>ok</item>
 		<item>Ok</item>
-		<item>oK</item>
-		<item>oki</item>
-		<item>0K</item>
-		<item>yeap</item>
-		<item>yeah</item>
 		<item>yes</item>
-		<item>yep</item>
 		<item>ja</item>
 		<item>da</item>
 		<item>si</item>
-		<item>positive</item>
 		<item>go!</item>
 	</string-array>
     
@@ -35,9 +27,9 @@
 	<!-- =============================== -->
 	 
 	 <!--    Game Activity    -->
-	<string name="gameEnded">That\'s all!</string>
+	<string name="gameEnded">Submit Highscore?</string>
 	
-	<string name="RestartOrLeave">Would you like to restart or leave the game?</string> 
+	<string name="RestartOrLeave">Would you like to resume or leave the game?</string> 
 	<string name="resume">Resume</string>
 	<string name="backToMenu">Back to Menu</string>
 	
@@ -62,6 +54,4 @@
 			or
 		 1. 0000		--> 
 	<string name="Score_format">%1$s %2$s</string>
-    
-
 </resources>

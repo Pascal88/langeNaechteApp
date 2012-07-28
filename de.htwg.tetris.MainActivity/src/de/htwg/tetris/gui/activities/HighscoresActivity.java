@@ -7,14 +7,11 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
-/**
- * @author Sebastian Guillen
- * 
- */
-
+@SuppressLint("WorldReadableFiles")
 public class HighscoresActivity extends Activity {
 
 	private static final String TAG = HighscoresActivity.class.getSimpleName();
@@ -23,7 +20,6 @@ public class HighscoresActivity extends Activity {
 	public static final int defValue = 0;
 
 	/** Called when the activity is first created. */
-	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.highscores);
@@ -38,6 +34,13 @@ public class HighscoresActivity extends Activity {
 	 */
 	private void initScores() {
 		TableLayout scoreTable = (TableLayout) findViewById(R.id.HighscoresTable);
+		Display display = getWindowManager().getDefaultDisplay();
+		int screenHeight = display.getHeight();
+		int height = (int) (screenHeight * 0.37);
+		
+		int numOfHighscores = height % 30;
+		numOfHighscores = (height-numOfHighscores) / 30;
+		MyApp.setNumOfHighscores(numOfHighscores);
 		for (int i = 0; i < MyApp.NUM_OF_HIGHSCORES; i++) {
 			TextView child = new TextView(getApplicationContext());
 			child.setTextSize(30);
@@ -46,7 +49,6 @@ public class HighscoresActivity extends Activity {
 		}
 	}
 
-	@SuppressLint("WorldReadableFiles")
 	private void setListener() {
 		OnSharedPreferenceChangeListener listener = new OnSharedPreferenceChangeListener() {
 			public void onSharedPreferenceChanged(
@@ -59,13 +61,12 @@ public class HighscoresActivity extends Activity {
 		settings.registerOnSharedPreferenceChangeListener(listener);
 	}
 
-	/** update all 5 highscores */
+	/** update all highscores */
 	private void updateGui() {
 		for (int i = 1; i <= MyApp.NUM_OF_HIGHSCORES; i++)
 			updateGuiHighscore(Integer.toString(i));
 	}
 
-	@SuppressLint("WorldReadableFiles")
 	private void updateGuiHighscore(String key) {
 		int intKey = 0;
 		try{
@@ -77,7 +78,6 @@ public class HighscoresActivity extends Activity {
 
 		SharedPreferences settings = getSharedPreferences(MyApp.HIGHSCORES,
 				MODE_WORLD_READABLE);
-		Log.d("key", key);
 		int score = settings.getInt(key, defValue);
 		String userName = settings.getString(key + " " + score, "God");
 		String format = getString(R.string.Score_format);
@@ -88,7 +88,6 @@ public class HighscoresActivity extends Activity {
 		TableLayout scoreTable = (TableLayout) findViewById(R.id.HighscoresTable);
 		TextView theScore = (TextView) (scoreTable).getChildAt(intKey);
 		theScore.setText(text);
-		Log.d(TAG, "Updated score " + key + " with " + text);
 	}
 
 }

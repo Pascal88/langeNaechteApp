@@ -54,8 +54,12 @@ public abstract class Element implements IElement
 	}
 	
 	public void setTurnStatus(int status) {
-		this.turnState = status;
-		this.setQuaders(turn[status-1]);
+
+		try{
+			this.turnState = status;
+			this.setQuaders(turn[status-1]);
+		} catch (ArrayIndexOutOfBoundsException e){	
+		}
 		
 	}
 	
@@ -112,5 +116,9 @@ public abstract class Element implements IElement
 
 	public IQuader getQ1() {
 		return q[0];
+	}
+	
+	public TetrisPoint[] getInitialView(){
+		return turn[0];		
 	}
 }

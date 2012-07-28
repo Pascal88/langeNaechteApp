@@ -2,16 +2,16 @@ package de.htwg.tetris.gui.activities;
 
 import de.htwg.tetris.controller.GameController;
 import de.htwg.tetris.controller.IGameController;
+import de.htwg.tetris.model.IElement;
 import de.htwg.tetris.model.IGameArray;
 import de.htwg.tetris.model.IQuader.states;
 import de.htwg.tetris.model.ITetrisColor;
-import de.htwg.tetris.observer.IObserver;
+import de.htwg.tetris.model.TetrisPoint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 public class GameView extends View {
@@ -46,12 +46,10 @@ public class GameView extends View {
 	}
 	
 	private void init() {
-		Log.d("lala", "init");
 		setBackgroundColor(Color.BLACK);
 		tetrisPaint = new Paint();
-		this.gameController = GameController.INSTANCE;
-		
-		this.gameArray = this.gameController.getSpielarray();
+		gameController = GameController.INSTANCE;
+		gameArray = this.gameController.getSpielarray();
 	}
 	
 	@Override
@@ -72,7 +70,6 @@ public class GameView extends View {
 		
 		//update game screen
 		repaint(canvas);
-		
 	}
 	
 	private void calcGameWindowSize(int viewHeight, int viewWidth) {
@@ -103,11 +100,25 @@ public class GameView extends View {
 	}
 	
 	private synchronized void repaint(Canvas canvas) {
+		
+		IElement ele = gameController.getNextElement();
+		TetrisPoint[] iniEle = ele.getInitialView();
+		
+		for(int m = 0; m < 4; m++){
+			ITetrisColor c = ele.getColor();
+			tetrisPaint.setColor(Color.rgb(c.getR(), c.getG(), c.getB()));
+			tetrisPaint.setStyle(Paint.Style.FILL);
+			
+			canvas.drawRect((iniEle[m].getX()*(qubeSize/2))+left+(((WIDTH+1)*qubeSize)),(iniEle[m].getY()*(qubeSize/2))+top+qubeSize,((iniEle[m].getX()+1)*(qubeSize/2))+left+(((WIDTH+1)*qubeSize)),((iniEle[m].getY()+1)*(qubeSize/2))+top+qubeSize,tetrisPaint);
+			tetrisPaint.setColor(Color.BLACK);
+			tetrisPaint.setStyle(Paint.Style.STROKE);
+			canvas.drawRect((iniEle[m].getX()*(qubeSize/2))+left+(((WIDTH+1)*qubeSize)),(iniEle[m].getY()*(qubeSize/2))+top+qubeSize,((iniEle[m].getX()+1)*(qubeSize/2))+left+(((WIDTH+1)*qubeSize)),((iniEle[m].getY()+1)*(qubeSize/2))+top+qubeSize,tetrisPaint);
+		}
+		
 		for (int i = 0; i < WIDTH; i++) {
 			for (int j = 0; j < HEIGHT; j++) {
 				if (gameArray.getState(i, j) != states.FREE) {
 					ITetrisColor c = gameArray.getColor(i,j);
-					tetrisPaint = new Paint();
 					tetrisPaint.setColor(Color.rgb(c.getR(), c.getG(), c.getB()));
 					tetrisPaint.setStyle(Paint.Style.FILL);
 					canvas.drawRect((i*qubeSize)+left,(j*qubeSize)+top,((i+1)*qubeSize)+left,((j+1)*qubeSize)+top,tetrisPaint);

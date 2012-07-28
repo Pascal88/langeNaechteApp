@@ -78,7 +78,7 @@ public class SplashActivity extends Activity {
 
 	private void setLayoutListener(RelativeLayout splashLayout) {
 		splashLayout.setOnClickListener(new View.OnClickListener() {
-			public void onClick(@SuppressWarnings("unused") View v) {
+			public void onClick(View v) {
 				startNextActivity();
 			}
 		});

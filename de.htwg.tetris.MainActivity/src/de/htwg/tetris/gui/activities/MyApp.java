@@ -12,19 +12,12 @@ import de.htwg.tetris.R;
 import de.htwg.tetris.controller.HighscoreController;
 import de.htwg.tetris.model.HighScoreBean;
 
-/**
- * The Class MyApp is the singleton of this App.
- * 
- * @author Sebastian Guillen
- */
-
 @SuppressLint("WorldWriteableFiles")
 public class MyApp extends Application {
 
 	private static final String TAG = MyApp.class.getSimpleName();
 
-	/** Show only best 5 scores */
-	public static final int NUM_OF_HIGHSCORES = 5;
+	public static int NUM_OF_HIGHSCORES = 5;
 	/* Shared Preferences */
 	public static final String HIGHSCORES = "tetris_highscores";
 
@@ -34,12 +27,10 @@ public class MyApp extends Application {
 	/**
 	 * Get 5 highest scores from server -asynchronously-
 	 * 
-	 * @param c
-	 *            the app context
+	 * @param c the app context
 	 */
 	public static void getHighscoresFromServer(final Context c) {
 		new Thread(new Runnable() {
-			@Override
 			public void run() {
 				HighScoreBean[] scores = HighscoreController.INSTANCE.loadHighScore(MyApp.NUM_OF_HIGHSCORES);
 				if (scores == null)
@@ -59,19 +50,12 @@ public class MyApp extends Application {
 		}, "getHighscoresFromServerThread").start();
 	}
 
-	/**
-	 * Get 5 highest scores from server -asynchronously-
-	 * 
-	 * @param c the app context
-	 * @param newScore
-	 */
-	public static void saveHighscoreToServer(final String username,
+	public static void saveHighscoreToServer(final String userName,
 			final int newScore) {
 		new Thread(new Runnable() {
-			@Override
 			public void run() {
-				Log.d(TAG, "Posting score " + newScore + " to server");
-				if (!HighscoreController.INSTANCE.saveHighScore(username,
+				Log.d(TAG, "Posting score " + newScore+" played by " + userName + " to server");
+				if (!HighscoreController.INSTANCE.saveHighScore(userName,
 						newScore))
 					Log.d(TAG, "Problem posting score " + newScore
 							+ " to server");
@@ -87,5 +71,9 @@ public class MyApp extends Application {
 	public static String getPositiveText(Resources res) {
 		String[] all = res.getStringArray(R.array.Positive_Text);
 		return all[rand.nextInt(all.length)];
+	}
+	
+	public static void setNumOfHighscores(int x) {
+		MyApp.NUM_OF_HIGHSCORES = x;
 	}
 }

@@ -1,40 +1,24 @@
 package de.htwg.tetris.gui.activities;
 
 import de.htwg.tetris.R;
-import de.htwg.tetris.controller.HighscoreController;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
-
-/**
- * The class MenuActivity
- * The menu.
- * @author Sebastian Guillen
- */
 
 public class MenuActivity extends Activity{
 
     private static final String TAG = MenuActivity.class.getSimpleName();
-    /** Listener to changed difficulty
-     * 	Use instance field for listener
-     *  It will not be gc'd as long as this instance is kept referenced*/
-    private static OnSharedPreferenceChangeListener li = null;
 
     /** Called when the activity is first created. */
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
        	setContentView(R.layout.menu);
@@ -42,7 +26,6 @@ public class MenuActivity extends Activity{
         InitButtons();
     }
 
-    @Override
     public void onResume(){
         super.onResume();
     }
@@ -108,7 +91,7 @@ public class MenuActivity extends Activity{
     	            public void onClick(DialogInterface dialog, int whichButton) {
     	        	// rate this app
     	        	Intent intent = new Intent(Intent.ACTION_VIEW);
-    	        	intent.setData(Uri.parse("market://details?id=esis.android.sudoku"));//FIXME test it on device
+    	        	intent.setData(Uri.parse("market://details?id=esis.android.sudoku"));
     	        	startActivity(intent);
     	            }
     	        })
@@ -135,7 +118,6 @@ public class MenuActivity extends Activity{
 
 	/**
 	 *  Visit website for feedback
-	 TODO update site with real package name (http://tetris.uservoice.com)
 	 */
 	private void visitFeedbackWebsite() {
         	String url = getString(R.string.feedback_website);

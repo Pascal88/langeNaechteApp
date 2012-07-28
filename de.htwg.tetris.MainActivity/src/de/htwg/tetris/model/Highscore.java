@@ -25,6 +25,7 @@ public class Highscore implements IHighscore {
 
 	@Override
 	public Boolean storeHighScore(String userName, int score) throws ClientProtocolException, IOException, HttpException {
+		userName = userName.replaceAll("\\s+", "");
 		HttpGet httpGet = new HttpGet("http://htwgtetris.eu5.org/?controller=highscore&action=store&username="+userName+"&score="+score);
 		HttpResponse response = this.client.execute(httpGet);
 		StatusLine statusLine = response.getStatusLine();

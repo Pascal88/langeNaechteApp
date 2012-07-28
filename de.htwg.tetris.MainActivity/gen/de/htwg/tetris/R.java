@@ -108,5 +108,7 @@ public final class R {
     }
     public static final class style {
         public static final int AppTheme=0x7f090000;
+        public static final int BiggerGameButton=0x7f090001;
+        public static final int SmallerGameButton=0x7f090002;
     }
 }

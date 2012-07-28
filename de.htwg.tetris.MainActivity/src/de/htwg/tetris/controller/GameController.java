@@ -1,13 +1,11 @@
 package de.htwg.tetris.controller;
 
 import java.util.List;
-
 import de.htwg.tetris.model.GameArray;
 import de.htwg.tetris.model.IElement;
 import de.htwg.tetris.model.IGameArray;
 import de.htwg.tetris.model.INewElement;
 import de.htwg.tetris.model.NewElement;
-import de.htwg.tetris.model.IQuader.states;
 import de.htwg.tetris.move.IMove;
 import de.htwg.tetris.move.MoveDown;
 import de.htwg.tetris.move.MoveLeft;
@@ -22,14 +20,18 @@ public class GameController implements IGameController{
 	public static IGameController INSTANCE = null;	
 	
 	private IElement element = null;
+	private IElement nextElement = null;
 	private IMove moveDown, moveLeft, moveRight, moveUp;
 	private IGameArray spielarray;
+	private List<IObserverNewElement> observersNewElement;
 
 	public GameController(List<IObserverNewElement> observersNewElement) 
 	{
 		if(GameController.INSTANCE == null) {
 			GameController.INSTANCE = this;
 		}
+		
+		this.observersNewElement = observersNewElement;
 		/* init move */
 		moveDown = new MoveDown(observersNewElement);
 		moveLeft = new MoveLeft();
@@ -102,13 +104,15 @@ public class GameController implements IGameController{
 	
 	public boolean testGameOver()
 	{
-		return spielarray.arrayStateOfElementPosition(element, states.TAKEN);	
+		return spielarray.isGameOver();
 	}
 	
 	public IElement newElement()
 	{
 		INewElement newEle = new NewElement();
-		element = newEle.newEl();
+		if(nextElement == null) nextElement = newEle.newEl();
+		element = nextElement;
+		nextElement = newEle.newEl();
 		this.spielarray.elementMergeArray(this.getElement());
 		return element;
 	}
@@ -128,5 +132,13 @@ public class GameController implements IGameController{
 
 	public IGameController getInstance() {
 		return GameController.INSTANCE;
+	}
+
+	public List<IObserverNewElement> getObserversNewElement() {
+		return observersNewElement;
+	}
+
+	public IElement getNextElement() {
+		return nextElement;
 	}
 }
