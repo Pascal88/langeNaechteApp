@@ -1,0 +1,38 @@
+[Box: ::de.htwg.tetris.move - ::de.htwg.tetris.move::IMove]
+X=510
+Y=386
+
+[Box: ::de.htwg.tetris.move - ::de.htwg.tetris.move::INewElement]
+X=240
+Y=187
+
+[Box: ::de.htwg.tetris.move - ::de.htwg.tetris.move::MoveDown]
+X=885
+Y=187
+
+[Box: ::de.htwg.tetris.move - ::de.htwg.tetris.move::MoveLeft]
+X=453
+Y=40
+
+[Box: ::de.htwg.tetris.move - ::de.htwg.tetris.move::MoveRight]
+X=28
+Y=40
+
+[Box: ::de.htwg.tetris.move - ::de.htwg.tetris.move::MoveUp]
+X=665
+Y=40
+
+[Box: ::de.htwg.tetris.move - ::de.htwg.tetris.move::NewElement]
+X=240
+Y=40
+
+[Box: ::de.htwg.tetris.move - ::de.htwg.tetris.observer::ASubjectNewElement]
+X=870
+Y=40
+
+[Diagram: ::de.htwg.tetris.move]
+OffsetX=0
+OffsetY=0
+Visibility=0
+ShowAssoc=1
+

@@ -19,4 +19,5 @@ public interface IElement extends Serializable{
 	public IQuader getQ4();
 	public void setQ1(IQuader q1);
 	public IQuader getQ1(); 
+	public TetrisPoint[] getInitialView();
 }

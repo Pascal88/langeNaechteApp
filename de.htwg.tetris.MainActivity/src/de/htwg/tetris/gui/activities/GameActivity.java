@@ -1,18 +1,19 @@
 package de.htwg.tetris.gui.activities;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.graphics.Canvas;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.htwg.tetris.R;
@@ -26,16 +27,8 @@ import de.htwg.tetris.controller.TetrisController;
 import de.htwg.tetris.model.IGameArray;
 import de.htwg.tetris.observer.IObserverNewElement;
 
-/**
- * The class GameActivity
- * 
- * @author Sebastian Guillen
- * 
- * TODO 's: fill stubs
- * 	   
- */
-
-public class GameActivity extends Activity {
+@SuppressLint("WorldReadableFiles")
+public class GameActivity extends Activity implements IObserverNewElement{
 
 	private static final String TAG = GameActivity.class.getSimpleName();
 	private TextView score;
@@ -45,6 +38,7 @@ public class GameActivity extends Activity {
 	private ITetrisController tetrisController;
 	private IGameArray persistentGameArray = null;
 	private Tetris tetris = null;
+	private int eventX, eventY;
 
 	/** Called when the activity is first created. */
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +59,7 @@ public class GameActivity extends Activity {
 		mechanikController =  MechanikController.INSTANCE;
 		tetrisController = TetrisController.INSTANCE;
 		this.gameArray = this.gameController.getSpielarray();
-		findViewById(R.id.GameFieldId);
-		Log.d("lala", "start");
+		gameController.getObserversNewElement().add(this);
 	}
 	
 	protected void onResume(){
@@ -90,29 +83,86 @@ public class GameActivity extends Activity {
 		}
 		this.tetris.finalize();
 		this.tetris = null;
-		Log.d("lala","stop");
 	}
 	
 	public void onBackPressed() {
 		this.mechanikController.stopMechanic();
-		askForRestartOrLeave();
+		askForResumeOrLeave();
 	}
-
+	
+	public boolean onTouchEvent(MotionEvent event){
+		switch (event.getAction()) {
+			case MotionEvent.ACTION_DOWN:
+				eventX = (int) event.getX();
+				eventY = (int) event.getY();
+				break;
+			case MotionEvent.ACTION_UP:
+				processTouch(eventX, eventY, (int) event.getX(), (int) event.getY());
+				break;
+			default:
+				return false;
+		}
+		return true;		
+	}
+	
+	private void processTouch(int startX, int startY, int endX, int endY){
+		
+		int diffX = endX-startX;
+		int diffY = endY-startY;
+		
+		if(diffX > 0) {
+			if(diffY > 0){
+				if(diffX > diffY){
+					gameController.moveRight();
+				}else if (diffY > diffX){
+					gameController.moveDown();
+				}
+			} else if (diffY < 0){
+				diffY *= -1;
+				if(diffX > diffY){
+					gameController.moveRight();
+				}else if (diffY > diffX){
+					gameController.moveUp();
+				}
+			}
+		} else if(diffX < 0) {
+			if(diffY > 0){
+				diffX *= -1;
+				if(diffX > diffY){
+					gameController.moveLeft();
+				}else if (diffY > diffX){
+					gameController.moveDown();
+				}
+			} else if (diffY < 0){
+				diffY *= -1;
+				diffX *= -1;
+				if(diffX > diffY){
+					gameController.moveLeft();
+				}else if (diffY > diffX){
+					gameController.moveUp();
+				}
+			}
+		}
+	}
+	
 	private void initScoreBar() {
 		score = (TextView) findViewById(R.id.Score);
-		//updateGuiScore(0);
 	}
 
-	public void updateGuiScore(int x) {
-		score.setText(x);
-		//TODO TetrisController.INSTANCE.getHighscore());
+	public  void updateGuiScore() {
+		runOnUiThread(new Runnable() {
+		     public void run() {
+
+		    	 score.setText(""+tetrisController.getHighscore());
+
+		    }
+		});
 	}
 
 	private void initButtons() {
 		Button b = (Button) findViewById(R.id.LeftButton);
 		b.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				Log.d("lala", "left");
 				leftButtonAction();
 			}
 		});
@@ -158,48 +208,30 @@ public class GameActivity extends Activity {
 	}
 
 	private void newGame() {
-		Log.d(TAG, "New Game");
-		//...
 		ResetGame();
 	}
 
 	private void ResetGame() {
-		// TODO Restore speed of game
 		if(this.mechanikController.isMechanikAlive()){
 			this.mechanikController.stopMechanic();
 		}
 		this.gameController.resetGame();
 		this.mechanikController.newMechanik();
-		repaint();
-		// Score reset
 	}
-
-	/** TODO
-	 * Called everytime the gui gets updated
-	 **/
-	private void repaint() {
-		//updateGuiScore(0);
-		//...
-	}
-
-	//TODO call when game ends
-	private void gameEnded() {
-		Log.d(TAG, "Game Ended");
-		showGameEndedMessage();
-		saveHighscore(this.tetrisController.getHighscore());
-	}
-	
 
 	private void showGameEndedMessage() {
-		new AlertDialog.Builder(this)
+		final EditText input = new EditText(this);
+		final Builder d = new AlertDialog.Builder(this)
 		.setIcon(R.drawable.ic_launcher)
 		.setPositiveButton(MyApp.getPositiveText(getResources()),
 				new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
-				ResetGame();
+				Editable value = input.getText();
+				saveHighscore(tetrisController.getHighscore(), value.toString());
+				exitGame();
 			}
 		})
-		.setNegativeButton("Menu",
+		.setNegativeButton(R.string.backToMenu,
 				new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				exitGame();
@@ -207,10 +239,17 @@ public class GameActivity extends Activity {
 		})
 		.setCancelable(false)
 		.setMessage(getString(R.string.gameEnded))
-		.show();
+		.setView(input);
+		runOnUiThread(new Runnable() {
+		     public void run() {
+
+		    	 d.show();
+
+		    }
+		});
 	}
 
-	private void saveHighscore(int newScore) {
+	private void saveHighscore(int newScore, String userName) {
 
 		String worstScoreIndex = Integer.toString(MyApp.NUM_OF_HIGHSCORES);
 		SharedPreferences settings = getSharedPreferences(MyApp.HIGHSCORES, MODE_WORLD_READABLE);
@@ -218,12 +257,13 @@ public class GameActivity extends Activity {
 				HighscoresActivity.defValue);
 		if (newScore > worstScore)
 			Toast.makeText(this, "New Highscore: " + newScore, Toast.LENGTH_SHORT).show();
-		MyApp.saveHighscoreToServer("DEBUG_USER",newScore);//FIXME get username: Name must have no spaces (Illegal character in query exception)
+		
+		MyApp.saveHighscoreToServer(userName,newScore);
 	}
 
-	private void askForRestartOrLeave() {
+	private void askForResumeOrLeave() {
 		String msg = getString(R.string.RestartOrLeave);
-		AlertDialog d = new AlertDialog.Builder(this)
+		new AlertDialog.Builder(this)
 		.setIcon(R.drawable.ic_action_search)
 		.setPositiveButton(getString(R.string.resume),
 				new DialogInterface.OnClickListener() {
@@ -242,9 +282,16 @@ public class GameActivity extends Activity {
 	}
 
 	private void exitGame() {
-		Log.d(TAG, "Exiting Game");
 		ResetGame();
 		this.persistentGameArray = null;
 		this.finish();
+	}
+
+	public void update(int countFullLine) {
+		updateGuiScore();
+		if (gameController.testGameOver()) {
+			showGameEndedMessage();
+		}
+		
 	}
 }

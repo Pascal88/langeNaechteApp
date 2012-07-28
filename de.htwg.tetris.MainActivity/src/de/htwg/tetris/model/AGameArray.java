@@ -2,7 +2,6 @@ package de.htwg.tetris.model;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import de.htwg.tetris.model.IQuader.states;
 import de.htwg.tetris.observer.ASubject;
 import de.htwg.tetris.observer.IObserver;
@@ -164,5 +163,12 @@ public abstract class AGameArray extends ASubject implements IGameArray{
 
 	public void setGame(IQuader[][] game) {
 		this.game = game;
+	}
+	
+	public boolean isGameOver(){
+		if(this.game[5][2].getState() == states.TAKEN){
+			return true;
+		}
+		return false;
 	}
 }
