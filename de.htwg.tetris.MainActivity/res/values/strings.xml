@@ -61,7 +61,15 @@
 	<!-- Score 0000 
 			or
 		 1. 0000		--> 
-	<string name="Score_format">%1$s %2$s</string>
+	<string name="Score_format">%1$s %2$s</string> 
+	<string name="leftString">&lt;-</string> 
+	<string name="rotateString">^</string> 
+	<string name="rightString">-></string> 
+	<string name="downString">v</string> 
+	<string name="startString">Start</string> 
+	<string name="highscoreButtonString">Highscores</string> 
+	<string name="feedbackButtonString">Feedback</string> 
+	<string name="exitButtonString">Exit</string>
     
 
 </resources>
