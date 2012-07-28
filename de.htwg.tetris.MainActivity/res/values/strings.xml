@@ -63,6 +63,4 @@
 	<string name="feedbackButtonString">Feedback</string> 
 	<string name="exitButtonString">Exit</string>
 
-	<string name="Score_format">%1$s %2$s</string>
-
 </resources>
