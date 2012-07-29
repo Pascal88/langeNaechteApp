@@ -25,7 +25,7 @@ public class MyApp extends Application {
 	private final static Random rand = new Random();
 
 	/**
-	 * Get 5 highest scores from server -asynchronously-
+	 * Get highest scores from server -asynchronously-
 	 * 
 	 * @param c the app context
 	 */

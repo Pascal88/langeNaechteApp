@@ -29,7 +29,6 @@ public class SplashActivity extends Activity {
 	@SuppressWarnings("unused")
 	private IHighscoreController highscoreController = null;
 
-	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash);
@@ -41,7 +40,7 @@ public class SplashActivity extends Activity {
 
 	// So instances get created
 	private void initHighscore() {
-		highscoreController = new HighscoreController();
+		highscoreController = new HighscoreController();//singleton of HighscoreController is created
 	}
 
 	private void appendVersion() {

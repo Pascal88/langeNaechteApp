@@ -66,6 +66,7 @@ public class MenuActivity extends Activity{
     }
 
 	private void startGameActivity() {
+		Log.d(TAG, "Start a Game");
 	    Intent intent = new Intent();
 	    intent.setClass(MenuActivity.this, GameActivity.class);
 	    MenuActivity.this.startActivity(intent);
@@ -76,7 +77,12 @@ public class MenuActivity extends Activity{
 	    this.finish();
 	}	
 
+	/**
+	 * show dialog where user can decide to give feedback on google marketplace or give suggestions via webpage
+	 * @param View v
+	 */
 	private void launchFeedbackDialog(View v) {
+		Log.d(TAG, "Feedback");
 		Resources res = getResources();
 		String s = getStringformArray(res.getStringArray(R.array.Feedback_Message));
     	final Button b = (Button) findViewById(R.id.FeedbackButton);

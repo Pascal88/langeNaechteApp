@@ -8,8 +8,10 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
+import android.view.Gravity;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 @SuppressLint("WorldReadableFiles")
 public class HighscoresActivity extends Activity {
@@ -88,7 +90,11 @@ public class HighscoresActivity extends Activity {
 		String text = String.format(format, key + ".", score + " " + userName);
 		TableLayout scoreTable = (TableLayout) findViewById(R.id.HighscoresTable);
 		TextView theScore = (TextView) (scoreTable).getChildAt(intKey);
-		theScore.setText(text);
+		try{
+			theScore.setText(text);
+		} catch(NullPointerException e) {
+			finish();
+		}
 	}
 
 }

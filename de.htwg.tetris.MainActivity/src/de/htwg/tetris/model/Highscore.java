@@ -23,7 +23,6 @@ public class Highscore implements IHighscore {
 		this.client = new DefaultHttpClient();
 	}
 
-	@Override
 	public Boolean storeHighScore(String userName, int score) throws ClientProtocolException, IOException, HttpException {
 		userName = userName.replaceAll("\\s+", "");
 		HttpGet httpGet = new HttpGet("http://htwgtetris.eu5.org/?controller=highscore&action=store&username="+userName+"&score="+score);
@@ -43,7 +42,6 @@ public class Highscore implements IHighscore {
 		return false;
 	}
 
-	@Override
 	public HighScoreBean[] loadHighScore(int count) throws ClientProtocolException, IOException, HttpException, JSONException {
 		
 		String daten = "";
