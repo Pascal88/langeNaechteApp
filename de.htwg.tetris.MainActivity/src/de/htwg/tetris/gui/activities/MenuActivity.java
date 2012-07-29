@@ -93,14 +93,6 @@ public class MenuActivity extends Activity{
     	            	visitFeedbackWebsite();                        	
     	            }
     	        })
-    	        .setNeutralButton("Rate it", new DialogInterface.OnClickListener() {
-    	            public void onClick(DialogInterface dialog, int whichButton) {
-    	        	// rate this app
-    	        	Intent intent = new Intent(Intent.ACTION_VIEW);
-    	        	intent.setData(Uri.parse("market://details?id=esis.android.sudoku"));
-    	        	startActivity(intent);
-    	            }
-    	        })
     	        .setNegativeButton(getString(R.string.no_thanks), new DialogInterface.OnClickListener() {
     	            public void onClick(DialogInterface dialog, int whichButton) {
     	            	//Just go away.
