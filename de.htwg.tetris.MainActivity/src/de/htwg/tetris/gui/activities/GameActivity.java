@@ -43,7 +43,7 @@ public class GameActivity extends Activity implements IObserverNewElement{
 	/** Called when the activity is first created. */
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.tetris = new Tetris();
+		tetris = new Tetris();
 		setContentView(R.layout.game);
 		initScoreBar();
 		initButtons();
@@ -52,44 +52,47 @@ public class GameActivity extends Activity implements IObserverNewElement{
 	
 	protected void onStart(){
 		super.onStart();
-		if(this.tetris == null){
-			this.tetris = new Tetris();
+		if(tetris == null){
+			tetris = new Tetris();
 		}
 		gameController = GameController.INSTANCE;
 		mechanikController =  MechanikController.INSTANCE;
 		tetrisController = TetrisController.INSTANCE;
-		this.gameArray = this.gameController.getSpielarray();
+		gameArray = gameController.getGameArray();
 		gameController.getObserversNewElement().add(this);
 	}
 	
 	protected void onResume(){
 		super.onResume();
-		newGame();
-		if(this.persistentGameArray != null) {
-			this.gameArray = this.persistentGameArray;
-			this.gameController.setSpielarray(this.persistentGameArray);
+		ResetGame();
+		if(persistentGameArray != null) {
+			gameArray = persistentGameArray;
+			gameController.setGameArray(persistentGameArray);
 		}
 	}
 	
 	protected void onPause(){
 		super.onPause();
-		this.persistentGameArray = this.gameArray;
+		persistentGameArray = gameArray;
 	}
 	
 	protected void onStop() {
 		super.onStop();
-		if(this.mechanikController.isMechanikAlive()){
-			this.mechanikController.stopMechanic();
+		if(mechanikController.isMechanikAlive()){//stop game loop == pause game
+			mechanikController.stopMechanic();
 		}
-		this.tetris.finalize();
-		this.tetris = null;
+		tetris.finalize();//delete all controllers
+		tetris = null;
 	}
 	
 	public void onBackPressed() {
-		this.mechanikController.stopMechanic();
+		mechanikController.stopMechanic();//stop game loop == pause game
 		askForResumeOrLeave();
 	}
 	
+	/**
+	 * capture Touch begin or end
+	 */
 	public boolean onTouchEvent(MotionEvent event){
 		switch (event.getAction()) {
 			case MotionEvent.ACTION_DOWN:
@@ -105,6 +108,13 @@ public class GameActivity extends Activity implements IObserverNewElement{
 		return true;		
 	}
 	
+	/**
+	 * @desc find out which move the user wants to do
+	 * @param startX
+	 * @param startY
+	 * @param endX
+	 * @param endY
+	 */
 	private void processTouch(int startX, int startY, int endX, int endY){
 		
 		int diffX = endX-startX;
@@ -113,15 +123,19 @@ public class GameActivity extends Activity implements IObserverNewElement{
 		if(diffX > 0) {
 			if(diffY > 0){
 				if(diffX > diffY){
+					Log.d(TAG, "Move Right");
 					gameController.moveRight();
 				}else if (diffY > diffX){
+					Log.d(TAG, "Move Down");
 					gameController.moveDown();
 				}
 			} else if (diffY < 0){
 				diffY *= -1;
 				if(diffX > diffY){
+					Log.d(TAG, "Move Right");
 					gameController.moveRight();
 				}else if (diffY > diffX){
+					Log.d(TAG, "Move Up");
 					gameController.moveUp();
 				}
 			}
@@ -129,26 +143,36 @@ public class GameActivity extends Activity implements IObserverNewElement{
 			if(diffY > 0){
 				diffX *= -1;
 				if(diffX > diffY){
+					Log.d(TAG, "Move Left");
 					gameController.moveLeft();
 				}else if (diffY > diffX){
+					Log.d(TAG, "Move Down");
 					gameController.moveDown();
 				}
 			} else if (diffY < 0){
 				diffY *= -1;
 				diffX *= -1;
 				if(diffX > diffY){
+					Log.d(TAG, "Move Left");
 					gameController.moveLeft();
 				}else if (diffY > diffX){
+					Log.d(TAG, "Move Up");
 					gameController.moveUp();
 				}
 			}
 		}
 	}
 	
+	/**
+	 * initialize Score Bar
+	 */
 	private void initScoreBar() {
 		score = (TextView) findViewById(R.id.Score);
 	}
 
+	/**
+	 * update Score Bar needs to be executed on UI Thread
+	 */
 	public  void updateGuiScore() {
 		runOnUiThread(new Runnable() {
 		     public void run() {
@@ -159,6 +183,9 @@ public class GameActivity extends Activity implements IObserverNewElement{
 		});
 	}
 
+	/**
+	 * initialize Buttons
+	 */
 	private void initButtons() {
 		Button b = (Button) findViewById(R.id.LeftButton);
 		b.setOnClickListener(new OnClickListener() {
@@ -188,37 +215,35 @@ public class GameActivity extends Activity implements IObserverNewElement{
 	}
 
 	private void leftButtonAction() {
-		this.gameController.moveLeft();
+		gameController.moveLeft();
 
 	}
 
 	private void rightButtonAction() {
-		this.gameController.moveRight();
+		gameController.moveRight();
 
 	}
 
 	private void upButtonAction() {
-		this.gameController.moveUp();
+		gameController.moveUp();
 
 	}
 
 	private void downButtonAction() {
-		this.gameController.moveDown();
+		gameController.moveDown();
 
 	}
 
-	private void newGame() {
-		ResetGame();
-	}
-
+	/**
+	 * Starts/Resets a Tetris Game
+	 */
 	private void ResetGame() {
-		if(this.mechanikController.isMechanikAlive()){
-			this.mechanikController.stopMechanic();
-		}
-		this.gameController.resetGame();
-		this.mechanikController.newMechanik();
+		tetrisController.reStartGame();
 	}
 
+	/**
+	 * shows dialog which asks user if he wants to submit his score
+	 */
 	private void showGameEndedMessage() {
 		final EditText input = new EditText(this);
 		final Builder d = new AlertDialog.Builder(this)
@@ -255,12 +280,15 @@ public class GameActivity extends Activity implements IObserverNewElement{
 		SharedPreferences settings = getSharedPreferences(MyApp.HIGHSCORES, MODE_WORLD_READABLE);
 		int worstScore = settings.getInt(worstScoreIndex,
 				HighscoresActivity.defValue);
-		if (newScore > worstScore)
+		if (newScore > worstScore)//notify user if has a new high ranked highscore
 			Toast.makeText(this, "New Highscore: " + newScore, Toast.LENGTH_SHORT).show();
 		
 		MyApp.saveHighscoreToServer(userName,newScore);
 	}
 
+	/**
+	 * Show dialog which asks the user to Resume the game or go back to Menu
+	 */
 	private void askForResumeOrLeave() {
 		String msg = getString(R.string.RestartOrLeave);
 		new AlertDialog.Builder(this)
@@ -268,7 +296,7 @@ public class GameActivity extends Activity implements IObserverNewElement{
 		.setPositiveButton(getString(R.string.resume),
 				new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog,int whichButton) {
-				MechanikController.INSTANCE.newMechanik();
+				MechanikController.INSTANCE.newMechanik();//old Thread(gameLoop) is dead so start new one
 			}
 		})
 		.setNegativeButton(R.string.backToMenu,
@@ -281,12 +309,18 @@ public class GameActivity extends Activity implements IObserverNewElement{
 		.show();
 	}
 
+	/**
+	 * back to Menu
+	 */
 	private void exitGame() {
 		ResetGame();
-		this.persistentGameArray = null;
-		this.finish();
+		persistentGameArray = null;
+		finish();
 	}
 
+	/**
+	 * called after Subject notify
+	 */
 	public void update(int countFullLine) {
 		updateGuiScore();
 		if (gameController.testGameOver()) {

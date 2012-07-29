@@ -22,7 +22,7 @@ public class GameController implements IGameController{
 	private IElement element = null;
 	private IElement nextElement = null;
 	private IMove moveDown, moveLeft, moveRight, moveUp;
-	private IGameArray spielarray;
+	private IGameArray gameArray;
 	private List<IObserverNewElement> observersNewElement;
 
 	public GameController(List<IObserverNewElement> observersNewElement) 
@@ -38,16 +38,16 @@ public class GameController implements IGameController{
 		moveRight = new MoveRight();
 		moveUp = new MoveUp();
 		
-		spielarray = new GameArray(); 	
+		gameArray = new GameArray(); 	
 	}
 	
-	public IGameArray getSpielarray() {
-		return spielarray;
+	public IGameArray getGameArray() {
+		return gameArray;
 	}
 
 
-	public void setSpielarray(IGameArray spielarray) {
-		this.spielarray = spielarray;
+	public void setGameArray(IGameArray gameArray) {
+		this.gameArray = gameArray;
 	}
 	
 	/**
@@ -60,7 +60,7 @@ public class GameController implements IGameController{
 	 */
 	public void moveDown() 
 	{
-		this.moveDown.move(element, spielarray);		
+		moveDown.move(element, gameArray);		
 	}
 	
 	/**
@@ -73,7 +73,7 @@ public class GameController implements IGameController{
 	 */
 	public void moveUp() 
 	{
-		this.moveUp.move(element, spielarray);		
+		moveUp.move(element, gameArray);		
 	}
 	
 	/**
@@ -86,7 +86,7 @@ public class GameController implements IGameController{
 	 */
 	public void moveLeft() 
 	{
-		this.moveLeft.move(element, spielarray);		
+		moveLeft.move(element, gameArray);		
 	}
 	
 	/**
@@ -99,12 +99,12 @@ public class GameController implements IGameController{
 	 */
 	public void moveRight() 
 	{
-		this.moveRight.move(element, spielarray);		
+		moveRight.move(element, gameArray);		
 	}
 	
 	public boolean testGameOver()
 	{
-		return spielarray.isGameOver();
+		return gameArray.isGameOver();
 	}
 	
 	public IElement newElement()
@@ -113,7 +113,7 @@ public class GameController implements IGameController{
 		if(nextElement == null) nextElement = newEle.newEl();
 		element = nextElement;
 		nextElement = newEle.newEl();
-		this.spielarray.elementMergeArray(this.getElement());
+		gameArray.elementMergeArray(getElement());
 		return element;
 	}
 	
@@ -126,8 +126,8 @@ public class GameController implements IGameController{
 	@Override
 	public void resetGame() 
 	{
-		spielarray.resetGame();	
-		this.newElement();
+		gameArray.resetGame();	
+		newElement();
 	}
 
 	public IGameController getInstance() {

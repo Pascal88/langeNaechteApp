@@ -92,7 +92,10 @@ public final class R {
         public static final int app_name=0x7f070000;
         public static final int backToMenu=0x7f070009;
         public static final int decline=0x7f070004;
+        public static final int downString=0x7f070011;
         public static final int eula_title=0x7f070002;
+        public static final int exitButtonString=0x7f070015;
+        public static final int feedbackButtonString=0x7f070014;
         public static final int feedback_website=0x7f07000a;
         /**  =============================== 
     Activity Specific strings    
@@ -100,11 +103,16 @@ public final class R {
     Game Activity    
          */
         public static final int gameEnded=0x7f070006;
+        public static final int highscoreButtonString=0x7f070013;
+        public static final int leftString=0x7f07000e;
         public static final int no_thanks=0x7f070005;
         public static final int resume=0x7f070008;
+        public static final int rightString=0x7f070010;
+        public static final int rotateString=0x7f07000f;
         /**     Splash Activity    
          */
         public static final int splash_subtitle=0x7f07000b;
+        public static final int startString=0x7f070012;
     }
     public static final class style {
         public static final int AppTheme=0x7f090000;

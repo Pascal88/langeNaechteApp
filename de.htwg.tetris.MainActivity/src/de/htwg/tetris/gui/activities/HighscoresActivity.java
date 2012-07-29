@@ -33,6 +33,7 @@ public class HighscoresActivity extends Activity {
 	 * Create score views
 	 */
 	private void initScores() {
+		Log.d(TAG, "initialize Highscores");
 		TableLayout scoreTable = (TableLayout) findViewById(R.id.HighscoresTable);
 		Display display = getWindowManager().getDefaultDisplay();
 		int screenHeight = display.getHeight();

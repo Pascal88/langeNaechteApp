@@ -49,11 +49,13 @@ public class GameView extends View {
 		setBackgroundColor(Color.BLACK);
 		tetrisPaint = new Paint();
 		gameController = GameController.INSTANCE;
-		gameArray = this.gameController.getSpielarray();
+		gameArray = this.gameController.getGameArray();
 	}
 	
-	@Override
-	 public void onWindowFocusChanged(boolean hasFocus) {
+	/**
+	 * called after UI Thread
+	 */
+	public void onWindowFocusChanged(boolean hasFocus) {
 	    super.onWindowFocusChanged(hasFocus);
 		calcGameWindowSize(this.getHeight(),this.getWidth());
 	 }
@@ -72,6 +74,11 @@ public class GameView extends View {
 		repaint(canvas);
 	}
 	
+	/**
+	 * @desc calculate window properties
+	 * @param viewHeight
+	 * @param viewWidth
+	 */
 	private void calcGameWindowSize(int viewHeight, int viewWidth) {
 		
 		if(viewHeight == 0 || viewWidth == 0) {
@@ -104,7 +111,7 @@ public class GameView extends View {
 		IElement ele = gameController.getNextElement();
 		TetrisPoint[] iniEle = ele.getInitialView();
 		
-		for(int m = 0; m < 4; m++){
+		for(int m = 0; m < 4; m++){// paint next element in right top corner
 			ITetrisColor c = ele.getColor();
 			tetrisPaint.setColor(Color.rgb(c.getR(), c.getG(), c.getB()));
 			tetrisPaint.setStyle(Paint.Style.FILL);
@@ -115,9 +122,9 @@ public class GameView extends View {
 			canvas.drawRect((iniEle[m].getX()*(qubeSize/2))+left+(((WIDTH+1)*qubeSize)),(iniEle[m].getY()*(qubeSize/2))+top+qubeSize,((iniEle[m].getX()+1)*(qubeSize/2))+left+(((WIDTH+1)*qubeSize)),((iniEle[m].getY()+1)*(qubeSize/2))+top+qubeSize,tetrisPaint);
 		}
 		
-		for (int i = 0; i < WIDTH; i++) {
+		for (int i = 0; i < WIDTH; i++) {//print gameArray/gameMAtrix
 			for (int j = 0; j < HEIGHT; j++) {
-				if (gameArray.getState(i, j) != states.FREE) {
+				if (gameArray.getState(i, j) != states.FREE) {//if is state.ELEMENT(means the element which is moving to the bottom) or states.TAKEN(fixed Elements on the bottom) draw what ever there is
 					ITetrisColor c = gameArray.getColor(i,j);
 					tetrisPaint.setColor(Color.rgb(c.getR(), c.getG(), c.getB()));
 					tetrisPaint.setStyle(Paint.Style.FILL);
@@ -125,7 +132,7 @@ public class GameView extends View {
 					tetrisPaint.setColor(Color.BLACK);
 					tetrisPaint.setStyle(Paint.Style.STROKE);
 					canvas.drawRect((i*qubeSize)+left,(j*qubeSize)+top,((i+1)*qubeSize)+left,((j+1)*qubeSize)+top,tetrisPaint);
-				} else {
+				} else {//nothing there paint a grey square
 					tetrisPaint.setColor(Color.GRAY);
 					tetrisPaint.setStyle(Paint.Style.FILL);
 					canvas.drawRect((i*qubeSize)+left,(j*qubeSize)+top,((i+1)*qubeSize)+left,((j+1)*qubeSize)+top,tetrisPaint);

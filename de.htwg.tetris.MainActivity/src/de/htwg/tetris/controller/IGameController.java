@@ -19,8 +19,8 @@ public interface IGameController
 	public IElement getNextElement();
 	boolean testGameOver();
 	
-	public IGameArray getSpielarray();
-	public void setSpielarray(IGameArray spielarray);
+	public IGameArray getGameArray();
+	public void setGameArray(IGameArray gameArray);
 	public IGameController getInstance();
 	public List<IObserverNewElement> getObserversNewElement();
 }

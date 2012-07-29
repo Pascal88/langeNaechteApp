@@ -6,7 +6,7 @@ public class TetrisController implements ITetrisController {
 	
 	public static ITetrisController INSTANCE = null;
 
-	private IGameArray spielarray;
+	private IGameArray gameArray;
 	private int highscore = 0;
 	
 	private IGameController gameController;
@@ -20,16 +20,15 @@ public class TetrisController implements ITetrisController {
 		
 		this.gameController = gameController;
 		this.mechanikController = mechanikController;
-		this.spielarray = gameController.getSpielarray(); 	
-		this.spielarray.registerObserverReset(this);
+		gameArray = gameController.getGameArray(); 	
 	}
 
-	public IGameArray getSpielarray() {
-		return spielarray;
+	public IGameArray getGameArray() {
+		return gameArray;
 	}
 
-	public void setSpielarray(IGameArray spielarray) {
-		this.spielarray = spielarray;
+	public void setGameArray(IGameArray gameArray) {
+		this.gameArray = gameArray;
 	}
 	
 	public void update(int countFullLine) {
@@ -44,22 +43,24 @@ public class TetrisController implements ITetrisController {
 	{
 		highscore += (i*100);
 	}
-
-	public void update() {
-		
-		//this.frame.resetTextField();		
-	}
 	
-	public int getHighscore(){//TODO call this from game
+	public int getHighscore(){
 		return highscore;
 	}
 	
 	public void setHighscore(int s){
-		this.highscore = s;
+		highscore = s;
 	}
 
-	@Override
 	public ITetrisController getInstance() {
 		return TetrisController.INSTANCE;
+	}
+	
+	public void reStartGame(){
+		if(mechanikController.isMechanikAlive()){//if a Gameloop is running
+			mechanikController.stopMechanic();//stop it
+		}
+		gameController.resetGame();//clear all models
+		mechanikController.newMechanik();//start new game loop
 	}
 }
