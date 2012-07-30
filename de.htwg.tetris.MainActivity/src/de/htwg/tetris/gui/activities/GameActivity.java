@@ -47,7 +47,7 @@ public class GameActivity extends Activity implements IObserverNewElement{
 		setContentView(R.layout.game);
 		initScoreBar();
 		initButtons();
-		MyApp.getHighscoresFromServer(getApplicationContext());
+		//MyApp.getHighscoresFromServer(getApplicationContext());
 	}
 	
 	protected void onStart(){

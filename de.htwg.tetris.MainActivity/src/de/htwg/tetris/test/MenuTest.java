@@ -1,23 +1,14 @@
 package de.htwg.tetris.test;
 
-import android.content.Intent;
-import android.test.ActivityUnitTestCase;
+import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
 import de.htwg.tetris.R;
 import de.htwg.tetris.gui.activities.MenuActivity;
 
-public class MenuTest extends ActivityUnitTestCase<MenuActivity> {
+public class MenuTest extends ActivityInstrumentationTestCase2<MenuActivity> {
 
 	public MenuTest() {
 		super(MenuActivity.class);
-	}
-	
-	protected void setUp() throws Exception{
-		startActivity(new Intent(getInstrumentation().getTargetContext(),MenuActivity.class),null,null);
-	}
-	
-	protected void tearDown() {
-		
 	}
 	
 	public void testStartButtonsExists(){
